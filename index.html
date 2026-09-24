@@ -1,341 +1,391 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VORTEXPLAY 👑</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <title>فروشگاه VORTEXPLAY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --طلایی: #FFD700;
-            --بنفش: #9932CC;
-            --تیره: #050510;
-            --کارت: #12122A;
-            --سفید: #FFFFFF;
-            --خاکستری: #AAAAAA;
+            --primary-color: #f39c12;
+            --bg-dark: #0a0512;
+            --card-bg: rgba(22, 11, 36, 0.9);
+            --border-color: rgba(243, 156, 18, 0.4);
         }
-        * {margin:0; padding:0; box-sizing:border-box; font-family:system-ui, sans-serif;}
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
+
         body {
-            background:var(--تیره);
-            color:var(--سفید);
-            min-height:100vh;
-            background:radial-gradient(circle at top, #1A1A3A 0%, #050510 70%);
+            background-color: var(--bg-dark);
+            color: #fff;
+            min-height: 100vh;
+            padding-bottom: 90px;
         }
-        .سربرگ {
-            padding:1.2rem 1.5rem;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            border-bottom:2px solid var(--طلایی);
+
+        header {
+            text-align: center;
+            padding: 30px 20px 10px;
         }
-        .لوگو {font-size:1.8rem; font-weight:bold; color:var(--طلایی);}
-        .دکمه-مدیریت {
-            background:var(--بنفش);
-            padding:0.7rem 1.2rem;
-            border-radius:8px;
-            cursor:pointer;
-            font-weight:bold;
-            border:none;
-            color:white;
+
+        .logo-box {
+            width: 100px; height: 100px;
+            margin: 0 auto 10px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            overflow: hidden;
+            box-shadow: 0 0 20px var(--primary-color);
         }
-        .نوار {
-            display:flex; gap:0.5rem; padding:1rem; justify-content:center; flex-wrap:wrap;
+
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        h1 { color: var(--primary-color); font-size: 2rem; margin-bottom: 5px; }
+
+        .cover-container {
+            max-width: 900px;
+            margin: 15px auto;
+            padding: 0 15px;
         }
-        .تب {
-            padding:0.7rem 1.2rem; border-radius:8px; cursor:pointer; border:2px solid transparent;
+
+        .cover-img {
+            width: 100%;
+            max-height: 280px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
         }
-        .تب.فعال {border-color:var(--طلایی); background:rgba(255,215,0,0.15);}
-        .محتوا {max-width:1100px; margin:0 auto; padding:1rem;}
-        .بخش {display:none;}
-        .بخش.فعال {display:block;}
-        .کارت {
-            background:var(--کارت); border-radius:12px; padding:1.2rem; margin:1rem 0;
-            border-left:3px solid var(--طلایی);
+
+        .main-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 15px;
         }
-        .کارت h3 {color:var(--طلایی); margin-bottom:0.5rem;}
-        .کارت p {color:var(--خاکستری); margin-bottom:0.8rem;}
-        .لینک {
-            display:inline-block; background:var(--بنفش); color:white;
-            padding:0.6rem 1.2rem; border-radius:6px; text-decoration:none;
+
+        .cat-nav {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
         }
-        .فرم {
-            background:var(--کارت); border-radius:12px; padding:2rem; max-width:500px; margin:2rem auto;
+
+        .cat-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
         }
-        .فرم h3 {text-align:center; margin-bottom:1.5rem; color:var(--طلایی);}
-        .فرم input, .فرم textarea, .فرم select {
-            width:100%; padding:0.9rem; margin:0.5rem 0 1rem;
-            border:1px solid rgba(255,215,0,0.3); border-radius:8px;
-            background:rgba(0,0,0,0.4); color:white; font-size:1rem;
+
+        .cat-btn.active {
+            background: var(--primary-color);
+            color: #000;
+            font-weight: bold;
         }
-        .فرم button {
-            width:100%; padding:0.9rem; border:none; border-radius:8px;
-            font-size:1rem; font-weight:bold; cursor:pointer;
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
         }
-        .دکمه-اصلی {background:var(--طلایی); color:black;}
-        .دکمه-خروج {background:transparent; color:var(--خاکستری); border:1px solid #444; margin-top:0.5rem;}
-        .پنهان {display:none !important;}
-        .خالی {text-align:center; color:var(--خاکستری); padding:3rem;}
-        .دکمه-حذف {background:rgba(255,50,50,0.2); color:#FF6666; border:none; padding:0.5rem 1rem; border-radius:6px; margin-top:0.5rem; cursor:pointer;}
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .price-tag {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 8px 0;
+        }
+
+        .btn-buy {
+            background: var(--primary-color);
+            color: #000;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .bottom-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: #05020a;
+            border-top: 1px solid var(--border-color);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-admin {
+            background: var(--primary-color);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #120824;
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        .close-btn { position: absolute; left: 15px; top: 15px; cursor: pointer; font-size: 1.5rem; }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            outline: none;
+        }
     </style>
 </head>
 <body>
 
-<header class="سربرگ">
-    <div class="لوگو">👑 VORTEXPLAY</div>
-    <button class="دکمه-مدیریت" onclick="بازکردن_پنل()">🔐 مدیریت</button>
-</header>
-
-<nav class="نوار">
-    <div class="تب فعال" data-bخش="بازی">🎮 بازی‌ها</div>
-    <div class="تب" data-bخش="پیلود">📦 پیلود</div>
-    <div class="تب" data-bخش="بکاپ">💾 بکاپ</div>
-</nav>
-
-<main class="محتوا">
-    <div class="بخش فعال" id="بخش-بازی">
-        <h2>🎮 بازی‌ها</h2>
-        <div id="لیست-بازی"></div>
-    </div>
-    <div class="بخش" id="بخش-پیلود">
-        <h2>📦 پیلود</h2>
-        <div id="لیست-پیلود"></div>
-    </div>
-    <div class="بخش" id="بخش-بکاپ">
-        <h2>💾 بکاپ/آموزش</h2>
-        <div id="لیست-بکاپ"></div>
-    </div>
-
-    <div class="بخش" id="بخش-مدیریت">
-        <div id="فرم-ورود" class="فرم">
-            <h3>🔐 ورود به پنل مدیریت</h3>
-            <input type="password" id="رمز-ورود" placeholder="رمز ۳۲ رقمی را وارد کنید">
-            <button class="دکمه-اصلی" onclick="بررسی_رمز()">ورود</button>
+    <header>
+        <div class="logo-box">
+            <img id="siteLogo" src="https://via.placeholder.com/100/f39c12/000000?text=STORE" alt="لوگو">
         </div>
+        <h1 id="siteTitle">فروشگاه VORTEXPLAY</h1>
+        <p id="siteSubtitle" style="color: #aaa;">مرجع فروش محصولات و اکانت‌های گیمینگ</p>
+    </header>
 
-        <div id="فرم-پنل" class="پنهان">
-            <div class="فرم">
-                <h3>➕ افزودن محتوای جدید</h3>
-                <select id="نوع">
-                    <option value="بازی">بازی</option>
-                    <option value="پیلود">پیلود</option>
-                    <option value="بکاپ">بکاپ/آموزش</option>
-                </select>
-                <input type="text" id="عنوان" placeholder="عنوان">
-                <textarea id="توضیحات" rows="3" placeholder="توضیحات کوتاه"></textarea>
-                <input type="url" id="لینک" placeholder="لینک دانلود">
-                <button class="دکمه-اصلی" onclick="ثبت()">✅ ثبت و نمایش</button>
-                <button class="دکمه-خروج" onclick="خروج()">خروج از پنل</button>
+    <div class="cover-container">
+        <img id="siteCover" class="cover-img" src="https://via.placeholder.com/900x280/120824/f39c12?text=VORTEXPLAY+STORE" alt="کاور">
+    </div>
+
+    <div class="main-container">
+        <div class="cat-nav" id="catNav"></div>
+        <div class="shop-grid" id="shopGrid"></div>
+    </div>
+
+    <div class="bottom-bar">
+        <span>🛒 فروشگاه فعال است</span>
+        <button class="btn-admin" onclick="openAdmin()">⚙️ ورود به مدیریت</button>
+    </div>
+
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAdmin()">&times;</span>
+            <h3 style="color: var(--primary-color); margin-bottom: 15px;">ورود به مدیریت فروشگاه</h3>
+
+            <div id="loginForm">
+                <p style="margin-bottom: 8px; font-size: 0.9rem; color: #ccc;">رمز عبور: <strong style="color: var(--primary-color)">1234</strong></p>
+                <input type="text" id="adminPass" class="form-control" placeholder="رمز عبور را وارد کنید">
+                <button class="btn-admin" style="width: 100%; margin-top: 5px;" onclick="checkPassword()">ورود به پنل</button>
+                <p id="errorMsg" style="color: #ff4d4d; margin-top: 10px; display: none; text-align: center;">❌ رمز عبور اشتباه است!</p>
             </div>
 
-            <div class="فرم" style="margin-top:2rem;">
-                <h3>✏️ ویرایش یا حذف</h3>
-                <select id="انتخاب-مورد" onchange="بارگذاری_مورد()">
-                    <option value="">-- یک مورد را انتخاب کنید --</option>
-                </select>
-                <input type="text" id="ویرایش-عنوان" placeholder="عنوان جدید">
-                <textarea id="ویرایش-توضیحات" rows="3" placeholder="توضیحات جدید"></textarea>
-                <input type="url" id="ویرایش-لینک" placeholder="لینک جدید">
-                <button class="دکمه-اصلی" onclick="ذخیره()">💾 ذخیره تغییرات</button>
-                <button class="دکمه-حذف" onclick="حذف()">🗑️ حذف این مورد</button>
+            <div id="adminPanel" style="display: none;">
+                <h4 style="color: var(--primary-color); margin-bottom: 10px;">➕ افزودن محصول جدید</h4>
+                <input type="text" id="pTitle" class="form-control" placeholder="نام محصول">
+                <select id="pCat" class="form-control"></select>
+                <input type="text" id="pPrice" class="form-control" placeholder="قیمت (مثلا: ۵۰,۰۰۰ تومان)">
+                <input type="text" id="pImg" class="form-control" placeholder="لینک عکس محصول">
+                <input type="text" id="pLink" class="form-control" placeholder="لینک دانلود یا خرید">
+                <button class="btn-admin" style="width: 100%; background: #27ae60; color:#fff;" onclick="addProduct()">افزودن محصول</button>
+
+                <hr style="border-color: var(--border-color); margin: 15px 0;">
+
+                <h4 style="color: var(--primary-color); margin-bottom: 10px;">📂 افزودن دسته‌بندی</h4>
+                <input type="text" id="newCat" class="form-control" placeholder="نام دسته جدید">
+                <button class="btn-admin" style="width: 100%;" onclick="addCategory()">افزودن دسته</button>
+
+                <hr style="border-color: var(--border-color); margin: 15px 0;">
+
+                <h4 style="color: var(--primary-color); margin-bottom: 10px;">🎨 تغییر ظاهر فروشگاه</h4>
+                <input type="text" id="editTitle" class="form-control" placeholder="نام فروشگاه">
+                <input type="text" id="editLogo" class="form-control" placeholder="لینک عکس لوگو">
+                <input type="text" id="editCover" class="form-control" placeholder="لینک عکس کاور">
+                <button class="btn-admin" style="width: 100%; background: #e67e22; color:#fff;" onclick="saveTheme()">ذخیره تغییرات ظاهر</button>
+                
+                <button class="btn-admin" style="width: 100%; background: #c0392b; color:#fff; margin-top: 15px;" onclick="resetData()">🔄 بازنشانی تنظیمات (پاکسازی کامل)</button>
             </div>
         </div>
     </div>
-</main>
 
-<script>
-// === اتصال دیتابیس ===
-const SUPABASE_URL = "https://ysovsscszmytalyrodeg.supabase.co";
-const SUPABASE_KEY = "sb_publishable_4OxYjCjqv5vxo2u6Ck03sg_ziAjqVGO";
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    <script>
+        // تبدیل اعداد فارسی به انگلیسی برای جلوگیری از خطای کیبورد
+        function fixNumbers(str) {
+            return str.replace(/[٠١٢٣٤٥٦٧٨٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d))
+                      .replace(/[۰۱۲۳۴۵۶۷۸۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+        }
 
-// === رمز ۳۲ رقمی ===
-const رمز_مدیریت = "VORTEX-992383-SHAHRIAR-2026-PLAY";
-let دسترسی_داده = false;
-let شناسه_ویرایش = null;
+        let shopData = {
+            settings: {
+                title: "فروشگاه VORTEXPLAY",
+                subtitle: "مرجع فروش محصولات و اکانت‌های گیمینگ",
+                logo: "https://via.placeholder.com/100/f39c12/000000?text=STORE",
+                cover: "https://via.placeholder.com/900x280/120824/f39c12?text=VORTEXPLAY+STORE"
+            },
+            categories: ["همه", "اکانت‌ها", "برنامه‌ها"],
+            activeCat: "همه",
+            products: [
+                {
+                    title: "اکانت ویژه VORTEX",
+                    category: "اکانت‌ها",
+                    price: "رایگان",
+                    img: "https://via.placeholder.com/250/120824/f39c12?text=VIP+ACCOUNT",
+                    link: "#"
+                }
+            ]
+        };
 
-// === تعویض تب‌ها ===
-document.querySelectorAll(".تب").forEach(تب => {
-    تب.addEventListener("click", () => {
-        document.querySelectorAll(".تب").forEach(t => t.classList.remove("فعال"));
-        تب.classList.add("فعال");
-        const نام = تب.getAttribute("data-bخش");
-        document.querySelectorAll(".بخش").forEach(b => b.classList.remove("فعال"));
-        document.getElementById(`بخش-${نام}`).classList.add("فعال");
-    });
-});
+        function loadData() {
+            let saved = localStorage.getItem('vortex_shop_db');
+            if(saved) shopData = JSON.parse(saved);
+            renderStore();
+        }
 
-function بازکردن_پنل() {
-    document.querySelectorAll(".تب").forEach(t => t.classList.remove("فعال"));
-    document.querySelectorAll(".بخش").forEach(b => b.classList.remove("فعال"));
-    document.getElementById("بخش-مدیریت").classList.add("فعال");
-    if (دسترسی_داده) {
-        document.getElementById("فرم-ورود").classList.add("پنهان");
-        document.getElementById("فرم-پنل").classList.remove("پنهان");
-    }
-}
+        function saveData() {
+            localStorage.setItem('vortex_shop_db', JSON.stringify(shopData));
+            renderStore();
+        }
 
-function بررسی_رمز() {
-    const ورودی = document.getElementById("رمز-ورود").value.trim();
-    if (ورودی === رمز_مدیریت) {
-        دسترسی_داده = true;
-        document.getElementById("فرم-ورود").classList.add("پنهان");
-        document.getElementById("فرم-پنل").classList.remove("پنهان");
-        بارگذاری_همه();
-        پر_کردن_لیست();
-    } else {
-        alert("❌ رمز عبور اشتباه است!");
-    }
-}
+        function renderStore() {
+            document.getElementById('siteTitle').innerText = shopData.settings.title;
+            document.getElementById('siteSubtitle').innerText = shopData.settings.subtitle;
+            document.getElementById('siteLogo').src = shopData.settings.logo;
+            document.getElementById('siteCover').src = shopData.settings.cover;
 
-function خروج() {
-    دسترسی_داده = false;
-    شناسه_ویرایش = null;
-    document.getElementById("فرم-ورود").classList.remove("پنهان");
-    document.getElementById("فرم-پنل").classList.add("پنهان");
-    document.getElementById("رمز-ورود").value = "";
-}
+            let catNav = document.getElementById('catNav');
+            let pCat = document.getElementById('pCat');
+            catNav.innerHTML = '';
+            pCat.innerHTML = '';
 
-// === خواندن همه محتوا از دیتابیس ===
-async function بارگذاری_همه() {
-    const { data, error } = await supabase
-        .from("محتوا")
-        .select("*")
-        .order("ایجاد_شده", { ascending: false });
+            shopData.categories.forEach(c => {
+                let btn = document.createElement('button');
+                btn.className = `cat-btn ${shopData.activeCat === c ? 'active' : ''}`;
+                btn.innerText = c;
+                btn.onclick = () => { shopData.activeCat = c; renderStore(); };
+                catNav.appendChild(btn);
 
-    if (error) {
-        console.error("خطا در خواندن داده‌ها:", error);
-        return;
-    }
+                if(c !== "همه") pCat.innerHTML += `<option value="${c}">${c}</option>`;
+            });
 
-    ["بازی", "پیلود", "بکاپ"].forEach(نوع => {
-        const کانتینر = document.getElementById(`لیست-${نوع}`);
-        const موارد = data.filter(m => m.نوع === نوع);
-        کانتینر.innerHTML = موارد.length === 0
-            ? `<p class="خالی">هنوز محتوایی اضافه نشده است</p>`
-            : موارد.map(ساخت_کارت).join("");
-    });
-}
+            let grid = document.getElementById('shopGrid');
+            grid.innerHTML = '';
 
-function ساخت_کارت(مورد) {
-    return `
-        <div class="کارت">
-            <h3>${مورد.عنوان}</h3>
-            <p>${مورد.توضیحات || "بدون توضیح"}</p>
-            <a href="${مورد.لینک}" target="_blank" class="لینک">⬇️ دانلود</a>
-        </div>
-    `;
-}
+            let filtered = shopData.activeCat === "همه" 
+                ? shopData.products 
+                : shopData.products.filter(p => p.category === shopData.activeCat);
 
-// === ثبت محتوای جدید ===
-async function ثبت() {
-    const داده = {
-        نوع: document.getElementById("نوع").value,
-        عنوان: document.getElementById("عنوان").value.trim(),
-        توضیحات: document.getElementById("توضیحات").value.trim(),
-        لینک: document.getElementById("لینک").value.trim()
-    };
+            filtered.forEach(p => {
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <img src="${p.img}" alt="${p.title}">
+                        <h3>${p.title}</h3>
+                        <div class="price-tag">${p.price}</div>
+                        <a href="${p.link}" target="_blank" class="btn-buy">🛒 دریافت / دانلود</a>
+                    </div>
+                `;
+            });
+        }
 
-    if (!داده.عنوان || !داده.لینک) {
-        alert("لطفاً عنوان و لینک را کامل کنید!");
-        return;
-    }
+        function openAdmin() { 
+            document.getElementById('adminModal').style.display = 'block'; 
+            document.getElementById('errorMsg').style.display = 'none';
+        }
+        function closeAdmin() { document.getElementById('adminModal').style.display = 'none'; }
 
-    const { error } = await supabase.from("محتوا").insert([داده]);
-    
-    if (error) {
-        alert("❌ اول جدول را در ساپابیس بساز! دستورش در پایین آمده.");
-        return;
-    }
+        function checkPassword() {
+            let input = document.getElementById('adminPass').value.trim();
+            input = fixNumbers(input); // تبدیل اعداد کیبورد فارسی به انگلیسی
 
-    alert("✅ با موفقیت اضافه شد! همه می‌بینند");
-    document.getElementById("عنوان").value = "";
-    document.getElementById("توضیحات").value = "";
-    document.getElementById("لینک").value = "";
-    await بارگذاری_همه();
-    await پر_کردن_لیست();
-}
+            if(input === "1234") {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                document.getElementById('editTitle').value = shopData.settings.title;
+                document.getElementById('editLogo').value = shopData.settings.logo;
+                document.getElementById('editCover').value = shopData.settings.cover;
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        }
 
-// === پر کردن لیست برای ویرایش ===
-async function پر_کردن_لیست() {
-    const { data } = await supabase.from("محتوا").select("*").order("ایجاد_شده", { ascending: false });
-    const لیست = document.getElementById("انتخاب-مورد");
-    لیست.innerHTML = `<option value="">-- انتخاب کنید --</option>`;
-    data.forEach(m => {
-        لیست.innerHTML += `<option value="${m.id}">${m.نوع} — ${m.عنوان}</option>`;
-    });
-}
+        function addProduct() {
+            let title = document.getElementById('pTitle').value;
+            let category = document.getElementById('pCat').value;
+            let price = document.getElementById('pPrice').value || 'رایگان';
+            let img = document.getElementById('pImg').value || 'https://via.placeholder.com/250';
+            let link = document.getElementById('pLink').value || '#';
 
-async function بارگذاری_مورد() {
-    شناسه_ویرایش = document.getElementById("انتخاب-مورد").value;
-    if (!شناسه_ویرایش) return;
+            if(!title) return alert('نام محصول الزامی است');
 
-    const { data } = await supabase.from("محتوا").select("*").eq("id", شناسه_ویرایش).single();
-    if (data) {
-        document.getElementById("ویرایش-عنوان").value = data.عنوان || "";
-        document.getElementById("ویرایش-توضیحات").value = data.توضیحات || "";
-        document.getElementById("ویرایش-لینک").value = data.لینک || "";
-    }
-}
+            shopData.products.push({ title, category, price, img, link });
+            saveData();
+            alert('محصول با موفقیت اضافه شد');
+            document.getElementById('pTitle').value = '';
+        }
 
-// === ذخیره ویرایش ===
-async function ذخیره() {
-    if (!شناسه_ویرایش) {
-        alert("ابتدا یک مورد را انتخاب کنید!");
-        return;
-    }
+        function addCategory() {
+            let name = document.getElementById('newCat').value.trim();
+            if(name && !shopData.categories.includes(name)) {
+                shopData.categories.push(name);
+                saveData();
+                alert('دسته اضافه شد');
+                document.getElementById('newCat').value = '';
+            }
+        }
 
-    const { error } = await supabase.from("محتوا")
-        .update({
-            عنوان: document.getElementById("ویرایش-عنوان").value.trim(),
-            توضیحات: document.getElementById("ویرایش-توضیحات").value.trim(),
-            لینک: document.getElementById("ویرایش-لینک").value.trim()
-        })
-        .eq("id", شناسه_ویرایش);
+        function saveTheme() {
+            shopData.settings.title = document.getElementById('editTitle').value || shopData.settings.title;
+            shopData.settings.logo = document.getElementById('editLogo').value || shopData.settings.logo;
+            shopData.settings.cover = document.getElementById('editCover').value || shopData.settings.cover;
+            saveData();
+            alert('ظاهر فروشگاه به‌روزرسانی شد');
+        }
 
-    if (error) {
-        alert("❌ خطا: " + error.message);
-    } else {
-        alert("✅ ویرایش شد!");
-        await بارگذاری_همه();
-        await پر_کردن_لیست();
-    }
-}
+        function resetData() {
+            if(confirm('آیا مطمئن هستید؟ تمام داده‌ها پاکسازی و ریست می‌شوند.')) {
+                localStorage.removeItem('vortex_shop_db');
+                location.reload();
+            }
+        }
 
-// === حذف ===
-async function حذف() {
-    if (!شناسه_ویرایش) {
-        alert("ابتدا یک مورد را انتخاب کنید!");
-        return;
-    }
-    if (!confirm("آیا مطمئن هستید؟")) return;
-
-    const { error } = await supabase.from("محتوا").delete().eq("id", شناسه_ویرایش);
-    
-    if (error) {
-        alert("❌ خطا: " + error.message);
-    } else {
-        alert("✅ حذف شد!");
-        شناسه_ویرایش = null;
-        await بارگذاری_همه();
-        await پر_کردن_لیست();
-    }
-}
-
-// === شروع اولیه ===
-بارگذاری_همه();
-</script>
+        loadData();
+    </script>
 </body>
 </html>
-CREATE TABLE محتوا (
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  نوع TEXT NOT NULL,
-  عنوان TEXT NOT NULL,
-  توضیحات TEXT,
-  لینک TEXT NOT NULL,
-  ایجاد_شده TIMESTAMP DEFAULT NOW()
-);
-
-ALTER TABLE محتوا ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "همه می‌بینند" ON محتوا FOR SELECT USING (true);
-CREATE POLICY "مدیر تغییر می‌دهد" ON محتوا FOR ALL USING (true);
-
