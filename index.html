@@ -1,1 +1,309 @@
-# vortexplay1
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VORTEXPLAY 👑 | فروشگاه بازی</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --طلایی: #ffd700;
+            --نارنجی: #ff8c00;
+            --آبی: #00bfff;
+            --بنفش: #6a0dad;
+            --پس‌زمینه: #050510;
+            --کارت: #12122a;
+            --متن: #f0f0ff;
+        }
+        * {margin:0; padding:0; box-sizing:border-box;}
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--پس‌زمینه);
+            color: var(--متن);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(106,13,173,0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(255,140,0,0.15) 0%, transparent 40%);
+        }
+        .کانتینر {max-width: 1200px; margin: 0 auto; padding: 20px;}
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            border-bottom: 1px solid rgba(255,215,0,0.2);
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--طلایی), var(--نارنجی));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .زیرعنوان {color: #999; font-size: 18px; margin-top: 8px;}
+        .نوارمنو {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .دکمه‌منو {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid rgba(255,215,0,0.3);
+            color: var(--طلایی);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .دکمه‌منو.فعال, .دکمه‌منو:hover {
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,140,0,0.2));
+            border-color: var(--طلایی);
+            transform: translateY(-2px);
+        }
+        .بخش {display: none;}
+        .بخش.نشان‌داده {display: block;}
+        .شبکه‌کارت {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .کارت {
+            background: var(--کارت);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,215,0,0.1);
+            transition: all 0.3s;
+        }
+        .کارت:hover {
+            transform: translateY(-5px);
+            border-color: var(--طلایی);
+            box-shadow: 0 10px 30px rgba(255,215,0,0.15);
+        }
+        .عکس‌کارت {
+            height: 160px;
+            background: linear-gradient(135deg, #2a2a5a, #1a1a3a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+        .محتوای‌کارت {padding: 15px;}
+        .عنوان‌کارت {font-size: 20px; font-weight: 600; margin-bottom: 8px; color: var(--طلایی);}
+        .توضیح‌کارت {color: #aaa; font-size: 14px; margin-bottom: 12px;}
+        .دکمه‌لینک {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--طلایی), var(--نارنجی));
+            color: #000;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        .دکمه‌لینک:hover {transform: scale(1.05);}
+        .پنل‌مدیریت {
+            background: rgba(106,13,173,0.1);
+            border: 1px solid rgba(106,13,173,0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        .ورودی {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,215,0,0.3);
+            color: white;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .دکمه‌تایید {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--آبی), var(--بنفش));
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .مخفی {display: none !important;}
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255,215,0,0.1);
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="کانتینر">
+        <header>
+            <h1>👑 VORTEXPLAY</h1>
+            <p class="زیرعنوان">مرکز دانلود بازی و سرگرمی</p>
+        </header>
+
+        <nav class="نوارمنو">
+            <button class="دکمه‌منو فعال" data-bخش="بازی‌ها">🎮 بازی‌ها</button>
+            <button class="دکمه‌منو" data-bخش="پیلود">📦 پیلود</button>
+            <button class="دکمه‌منو" data-bخش="بکاپ">💾 بکاپ و آموزش</button>
+            <button class="دکمه‌منو" data-bخش="مدیریت">🔐 پنل مدیریت</button>
+        </nav>
+
+        <!-- بخش بازی‌ها -->
+        <section class="بخش نشان‌داده" id="بازی‌ها">
+            <h2 style="margin-bottom:20px; color:var(--طلایی)">🎮 بازی‌ها</h2>
+            <div class="شبکه‌کارت" id="لیست‌بازی‌ها">
+                <!-- کارت‌ها اینجا اضافه میشن -->
+            </div>
+        </section>
+
+        <!-- بخش پیلود -->
+        <section class="بخش" id="پیلود">
+            <h2 style="margin-bottom:20px; color:var(--آبی)">📦 پیلود</h2>
+            <div class="شبکه‌کارت" id="لیست‌پیلود">
+            </div>
+        </section>
+
+        <!-- بخش بکاپ -->
+        <section class="بخش" id="بکاپ">
+            <h2 style="margin-bottom:20px; color:var(--بنفش)">💾 بکاپ و آموزش</h2>
+            <div class="شبکه‌کارت" id="لیست‌بکاپ">
+            </div>
+        </section>
+
+        <!-- پنل مدیریت -->
+        <section class="بخش" id="مدیریت">
+            <div class="پنل‌مدیریت" id="فرم‌ورود">
+                <h3 style="color:var(--طلایی); margin-bottom:15px;">🔐 ورود به پنل مدیریت</h3>
+                <input type="password" id="رمزعبور" class="ورودی" placeholder="رمز عبور را وارد کنید">
+                <button class="دکمه‌تایید" onclick="بررسی‌رمز()">ورود</button>
+            </div>
+
+            <div id="پنل‌مخفی" class="مخفی">
+                <h3 style="color:var(--طلایی); margin-bottom:15px;">➕ افزودن محتوای جدید</h3>
+                <select id="نوع‌بخش" class="ورودی">
+                    <option value="بازی‌ها">بازی</option>
+                    <option value="پیلود">پیلود</option>
+                    <option value="بکاپ">بکاپ/آموزش</option>
+                </select>
+                <input type="text" id="عنوان‌جدید" class="ورودی" placeholder="عنوان">
+                <input type="text" id="توضیح‌جدید" class="ورودی" placeholder="توضیح کوتاه">
+                <input type="text" id="لینک‌جدید" class="ورودی" placeholder="لینک دانلود">
+                <button class="دکمه‌تایید" onclick="افزودن‌محتوا()">ثبت محتوا</button>
+                <p style="margin-top:20px; color:#0f0;">✅ محتوا بلافاصله نمایش داده می‌شود</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>VORTEXPLAY © 2026 | سایت رایگان و همیشه فعال</p>
+        </footer>
+    </div>
+
+    <script>
+        // رمز مدیریت
+        const رمزصحیح = "vortex2026"; // میتونی تغییر بدی
+
+        // داده‌های اولیه
+        let محتوا = {
+            "بازی‌ها": [],
+            "پیلود": [],
+            "بکاپ": []
+        };
+
+        // بارگذاری از حافظه مرورگر
+        function بارگذاری() {
+            const ذخیره = localStorage.getItem("vortex_data");
+            if (ذخیره) محتوا = JSON.parse(ذخیره);
+            نمایش‌همه();
+        }
+
+        function ذخیره() {
+            localStorage.setItem("vortex_data", JSON.stringify(محتوا));
+        }
+
+        // تعویض بخش‌ها
+        document.querySelectorAll(".دکمه‌منو").forEach(دکمه => {
+            دکمه.addEventListener("click", () => {
+                document.querySelectorAll(".دکمه‌منو").forEach(d => d.classList.remove("فعال"));
+                دکمه.classList.add("فعال");
+                const نامبخش = دکمه.getAttribute("data-bخش");
+                document.querySelectorAll(".بخش").forEach(b => b.classList.remove("نشان‌داده"));
+                document.getElementById(نامبخش).classList.add("نشان‌داده");
+            });
+        });
+
+        function بررسی‌رمز() {
+            const ورودی = document.getElementById("رمزعبور").value;
+            if (ورودی === رمزصحیح) {
+                document.getElementById("فرم‌ورود").classList.add("مخفی");
+                document.getElementById("پنل‌مخفی").classList.remove("مخفی");
+            } else {
+                alert("❌ رمز عبور اشتباه است!");
+            }
+        }
+
+        function افزودن‌محتوا() {
+            const بخش = document.getElementById("نوع‌بخش").value;
+            const عنوان = document.getElementById("عنوان‌جدید").value.trim();
+            const توضیح = document.getElementById("توضیح‌جدید").value.trim();
+            const لینک = document.getElementById("لینک‌جدید").value.trim();
+
+            if (!عنوان || !لینک) {
+                alert("لطفاً عنوان و لینک را کامل کنید!");
+                return;
+            }
+
+            محتوا[بخش].push({
+                عنوان: عنوان,
+                توضیح: توضیح || "بدون توضیح",
+                لینک: لینک
+            });
+
+            ذخیره();
+            نمایش‌همه();
+
+            // پاک کردن فرم
+            document.getElementById("عنوان‌جدید").value = "";
+            document.getElementById("توضیح‌جدید").value = "";
+            document.getElementById("لینک‌جدید").value = "";
+
+            alert("✅ با موفقیت اضافه شد!");
+        }
+
+        function نمایش‌کارت(آیتم, کد) {
+            return `
+                <div class="کارت">
+                    <div class="عکس‌کارت">🎮</div>
+                    <div class="محتوای‌کارت">
+                        <h3 class="عنوان‌کارت">${آیتم.عنوان}</h3>
+                        <p class="توضیح‌کارت">${آیتم.توضیح}</p>
+                        <a href="${آیتم.لینک}" target="_blank" class="دکمه‌لینک">⬇️ دانلود</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function نمایش‌همه() {
+            ["بازی‌ها", "پیلود", "بکاپ"].forEach(نام => {
+                const کانتینر = document.getElementById(`لیست‌${نام}`);
+                if (محتوا[نام].length === 0) {
+                    کانتینر.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#666;">هنوز محتوایی اضافه نشده است</p>`;
+                } else {
+                    کانتینر.innerHTML = محتوا[نام].map(نمایش‌کارت).join("");
+                }
+            });
+        }
+
+        // شروع
+        بارگذاری();
+    </script>
+</body>
+</html>
