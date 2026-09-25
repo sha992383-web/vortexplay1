@@ -3,169 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VORTEXPLAY 👑</title>
+<title>VORTEXSTORE 👑</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Tahoma,sans-serif;min-height:100vh;
-  background:linear-gradient(135deg,#0A0418,#1A0A3C,#2A1050);color:#fff;padding:15px}
-.container{max-width:650px;margin:0 auto}
-.header{text-align:center;padding:25px 0;border-bottom:2px solid transparent;
-  border-image:linear-gradient(90deg,transparent,#FFD700,#FF6B00,transparent) 1}
-.logo{font-size:32px;font-weight:bold;background:linear-gradient(90deg,#FFD700,#FF6B00);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.subtitle{color:#888;margin-top:8px}
-.card{background:rgba(25,12,50,.9);border-radius:20px;padding:25px;margin:20px 0;
-  border:1px solid rgba(255,215,0,.3)}
-input,textarea{width:100%;padding:14px;border-radius:12px;border:1px solid rgba(255,215,0,.3);
-  background:rgba(0,0,0,.5);color:#fff;font-size:15px;margin-bottom:12px}
-button{width:100%;padding:15px;border-radius:12px;border:none;font-size:16px;font-weight:bold;cursor:pointer}
-.btn-primary{background:linear-gradient(90deg,#FFD700,#FF6B00);color:#000;margin-top:8px}
-.status{padding:12px;border-radius:10px;text-align:center;margin:10px 0}
-.ok{background:rgba(0,255,136,.15);color:#00FF88}
-.wait{background:rgba(255,204,0,.15);color:#FFCC00}
-.err{background:rgba(255,51,102,.15);color:#FF3366}
-.msg{padding:15px;border-bottom:1px solid rgba(255,255,255,.1)}
-.msg:last-child{border-bottom:none}
-.name{color:#FFD700;font-weight:bold;margin-bottom:5px}
-.time{color:#888;font-size:12px;margin-bottom:8px}
-.empty{text-align:center;padding:40px;color:#777}
-.controls{display:flex;gap:10px;margin-top:15px;flex-wrap:wrap}
-.btn-small{width:auto;padding:10px 18px;font-size:14px;background:rgba(0,217,255,.15);
-  color:#00D9FF;border:1px solid rgba(0,217,255,.3)}
-.admin-btn{position:fixed;top:15px;left:15px;width:48px;height:48px;border-radius:50%;
-  border:none;background:linear-gradient(90deg,#FFD700,#FF6B00);font-size:20px;cursor:pointer}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:none;align-items:center;justify-content:center;padding:20px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Tahoma,sans-serif}
+:root{--gold:#FFD700;--orange:#FF6B00;--dark:#0F0F1A;--purple:#7B2CFF;--cyan:#00D4FF}
+body{background:linear-gradient(135deg,#0F0F1A,#1A1A3A);min-height:100vh;color:#fff;padding:15px}
+.container{max-width:700px;margin:0 auto}
+.header{text-align:center;padding:30px 0;border-bottom:2px solid var(--gold)}
+.logo{font-size:2.2rem;font-weight:bold;background:linear-gradient(90deg,var(--gold),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:25px 0}
+.nav-btn{background:linear-gradient(90deg,var(--purple),var(--cyan));border:none;padding:12px 20px;border-radius:10px;color:#fff;font-size:15px;cursor:pointer;transition:.3s}
+.nav-btn:hover{transform:scale(1.05);box-shadow:0 0 12px var(--cyan)}
+.nav-btn.active{box-shadow:0 0 15px var(--gold)}
+.box{background:rgba(255,255,255,.05);border-radius:15px;padding:20px;border:1px solid rgba(255,215,0,.3);min-height:300px}
+.msg{background:rgba(255,255,255,.08);padding:15px;border-radius:10px;margin:10px 0;border-right:3px solid var(--gold)}
+.msg-text{line-height:1.8;margin-bottom:8px}
+.msg-time{font-size:12px;color:#777}
+.empty{text-align:center;padding:40px;color:#666}
+.admin-btn{position:fixed;top:15px;left:15px;width:48px;height:48px;border-radius:50%;border:none;background:linear-gradient(90deg,var(--gold),var(--orange));font-size:20px;cursor:pointer;z-index:999}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
 .modal.show{display:flex}
-.modal-box{background:rgba(25,12,50,.95);border-radius:20px;padding:25px;border:2px solid #FFD700;max-width:400px;width:100%}
+.modal-box{background:#1A1A3A;border-radius:15px;padding:25px;border:2px solid var(--gold);width:100%;max-width:450px}
+input,textarea,select{width:100%;padding:12px;border-radius:8px;border:1px solid #444;background:#0F0F1A;color:#fff;margin:8px 0;font-size:15px}
+.btn{width:100%;padding:14px;border-radius:10px;border:none;font-size:16px;font-weight:bold;cursor:pointer;margin-top:8px}
+.btn-primary{background:linear-gradient(90deg,var(--gold),var(--orange));color:#000}
+.btn-small{width:auto;padding:10px 18px;background:rgba(0,212,255,.15);color:var(--cyan);border:1px solid rgba(0,212,255,.3)}
+.btn-danger{background:rgba(255,68,68,.2);color:#FF4444;border:1px solid rgba(255,68,68,.3)}
 .hidden{display:none}
+a{color:var(--cyan);text-decoration:none}
 </style>
 </head>
 <body>
 
-<button class="admin-btn" onclick="openAdmin()">⚙️</button>
-
-<div class="modal" id="adminModal">
-  <div class="modal-box">
-    <h3 style="color:#FFD700;text-align:center;margin-bottom:20px">🔐 پنل مدیریت</h3>
-    <input type="password" id="adminPass" placeholder="رمز ۳۲ رقمی را وارد کنید">
-    <button class="btn-primary" onclick="checkAdmin()">ورود</button>
-    <button class="btn-small" style="width:100%;margin-top:10px" onclick="closeAdmin()">بستن</button>
-    <div id="adminActions" class="hidden" style="margin-top:20px">
-      <p style="color:#00FF88;text-align:center">✅ وارد شدید</p>
-      <button class="btn-small" style="width:100%;margin-top:15px;background:rgba(255,51,102,.15);color:#FF3366;border-color:#FF3366"
-        onclick="clearAll()">🗑️ حذف همه پیام‌ها</button>
-    </div>
-  </div>
-</div>
+<button class="admin-btn" onclick="openPanel()">⚙️</button>
 
 <div class="container">
   <div class="header">
-    <h1 class="logo">👑 VORTEXPLAY</h1>
-    <p class="subtitle">تابلو پیام‌رسانی ابری — نسخه نهایی</p>
+    <h1 class="logo">👑 VORTEXSTORE</h1>
+    <p style="color:#888;margin-top:8px">پایگاه گیمینگ و دانلود</p>
   </div>
 
-  <div class="card">
-    <input type="text" id="uName" placeholder="نام شما" maxlength="30">
-    <textarea id="uMsg" placeholder="پیام خود را بنویسید..."></textarea>
-    <button class="btn-primary" id="sendBtn" onclick="sendMsg()">📤 ارسال پیام</button>
-    <div id="status" class="status wait">⏳ در حال اتصال...</div>
-    <div class="controls">
-      <button class="btn-small" onclick="loadMsgs()">🔄 بروزرسانی</button>
-      <span style="color:#666;font-size:12px">هر ۵ ثانیه خودکار</span>
-    </div>
+  <div class="nav">
+    <button class="nav-btn active" data-cat="payload">📦 پیلود</button>
+    <button class="nav-btn" data-cat="backup">💾 بکاپ</button>
+    <button class="nav-btn" data-cat="game">🎮 بازی</button>
   </div>
 
-  <div class="card"><div id="list"></div></div>
+  <div class="box" id="msgs">
+    <p class="empty">در حال بارگذاری...</p>
+  </div>
 </div>
 
+<div class="modal" id="panel">
+  <div class="modal-box">
+    <h3 style="color:var(--gold);text-align:center;margin-bottom:15px">🔐 پنل مدیریت</h3>
+    <input type="password" id="pass" placeholder="رمز ۳۲ رقمی">
+    <button class="btn btn-primary" onclick="checkPass()">ورود</button>
+    <button class="btn btn-small" style="width:100%;margin-top:8px" onclick="closePanel()">بستن</button>
+    
+    <div id="adminContent" class="hidden">
+      <select id="cat">
+        <option value="payload">پیلود</option>
+        <option value="backup">بکاپ</option>
+        <option value="game">بازی</option>
+      </select>
+      <textarea id="msgText" rows="4" placeholder="متن پیام..."></textarea>
+      <input type="text" id="msgLink" placeholder="لینک دانلود (اختیاری)">
+      <button class="btn btn-primary" onclick="sendMsg()">✅ ارسال پیام</button>
+      <button class="btn btn-danger btn-small" style="width:100%;margin-top:8px" onclick="closePanel()">بستن</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ==================================================
-const BIN_ID = '6ab5a0c1ac6210605af2700e';
-const MASTER_KEY = '$2a$10$UjKZraBn9B.p9tfKZ6xzzuBs1uGDggLoZbjCdt9T9jVDor9.KGK56';
-const ADMIN_PASS = 'VORTEX2026';
-const API = 'https://api.jsonbin.io/v3/b/' + BIN_ID;
-const HEAD = {'X-Master-Key': MASTER_KEY, 'Content-Type':'application/json'};
-let lastId = '';
-// ==================================================
+// ========== مقادیر شما از قبل تنظیم شده ✅ ==========
+const SUPABASE_URL = "https://wdtaeumtkauoewaghpxb.supabase.co";
+const SUPABASE_KEY = "sb_publishable_lHHour5qR6c5kVOiuptaig_Cuxz-ON8";
+const ADMIN_PASS = "VORTEX2026abc123XYZ789!@#$%^&*()";
+// =====================================================
 
-function stat(txt, t='wait'){
-  const el = document.getElementById('status');
-  el.className = `status ${t}`;
-  el.textContent = txt;
-}
+const { createClient } = supabase;
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-async function loadMsgs(){
-  try{
-    const res = await fetch(API + '/latest?t=' + Date.now(), {headers:HEAD, cache:'no-store'});
-    if(!res.ok) throw new Error(`کد ${res.status}`);
-    const data = await res.json();
-    const msgs = data.record.messages || [];
-    const currId = msgs.length ? msgs[0].id : 'EMPTY';
-    if(currId !== lastId){
-      lastId = currId;
-      render(msgs);
-      stat(`✅ متصل — ${msgs.length} پیام`, 'ok');
-    }
-  }catch(e){
-    stat(`❌ خطا: ${e.message}`, 'err');
-  }
-}
+let currentCat = 'payload';
 
-async function sendMsg(){
-  const name = document.getElementById('uName').value.trim() || 'ناشناس';
-  const text = document.getElementById('uMsg').value.trim();
-  if(!text){ alert('پیام بنویس!'); return; }
+async function loadMessages(){
+  const {data, error} = await supabase
+    .from('messages')
+    .select('*')
+    .eq('category', currentCat)
+    .order('created_at', {ascending: false});
   
-  const btn = document.getElementById('sendBtn');
-  btn.disabled = true; btn.textContent = '⏳ ارسال...';
-  stat('⏳ در حال ارسال...');
-  
-  try{
-    const prev = await fetch(API + '/latest?t=' + Date.now(), {headers:HEAD, cache:'no-store'});
-    const all = (await prev.json()).record.messages || [];
-    all.unshift({id:Date.now(),name:name,text:text,time:new Date().toLocaleString('fa-IR')});
-    
-    await fetch(API, {method:'PUT', headers:HEAD, body:JSON.stringify({messages:all})});
-    
-    stat('✅ ارسال شد!', 'ok');
-    document.getElementById('uMsg').value = '';
-    lastId = all[0].id;
-    render(all);
-  }catch(e){
-    stat(`❌ خطا: ${e.message}`, 'err');
-    alert(`خطا: ${e.message}`);
-  }finally{
-    btn.disabled = false; btn.textContent = '📤 ارسال پیام';
-  }
-}
-
-function render(msgs){
-  const el = document.getElementById('list');
-  if(!msgs.length){
-    el.innerHTML = '<div class="empty">هنوز پیامی نیست ✍️ اولین پیام را شما بنویسید!</div>';
+  const box = document.getElementById('msgs');
+  if(!data || data.length === 0){
+    box.innerHTML = '<p class="empty">هنوز پیامی ارسال نشده ✍️ اولین پیام را شما بنویسید!</p>';
     return;
   }
-  el.innerHTML = msgs.map(m => `
+  box.innerHTML = data.map(m => `
     <div class="msg">
-      <div class="name">👤 ${escape(m.name)}</div>
-      <div class="time">${m.time}</div>
-      <div style="margin:8px 0;line-height:1.7">${escape(m.text)}</div>
+      <div class="msg-text">${m.text}${m.link ? `<br><br>🔗 <a href="${m.link}" target="_blank">دانلود</a>` : ''}</div>
+      <div class="msg-time">${new Date(m.created_at).toLocaleString('fa-IR')}</div>
     </div>
   `).join('');
 }
 
-function escape(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
-function openAdmin(){document.getElementById('adminModal').classList.add('show')}
-function closeAdmin(){document.getElementById('adminModal').classList.remove('show');document.getElementById('adminPass').value='';document.getElementById('adminActions').classList.add('hidden')}
-function checkAdmin(){document.getElementById('adminPass').value===ADMIN_PASS?document.getElementById('adminActions').classList.remove('hidden'):alert('رمز اشتباه!')}
-async function clearAll(){
-  if(!confirm('همه حذف شوند؟ بازگشت ندارد!'))return;
-  await fetch(API, {method:'PUT', headers:HEAD, body:JSON.stringify({messages:[]})});
-  lastId='EMPTY';render([]);stat('✅ همه حذف شدند','ok');closeAdmin();
+async function sendMsg(){
+  const text = document.getElementById('msgText').value.trim();
+  const link = document.getElementById('msgLink').value.trim();
+  if(!text) return alert('متن پیام را بنویسید!');
+
+  const {error} = await supabase.from('messages').insert({
+    category: document.getElementById('cat').value,
+    text: text,
+    link: link || null
+  });
+
+  if(error) alert('❌ خطا: ' + error.message);
+  else {
+    alert('✅ پیام ارسال شد! همه بلافاصله می‌بینند');
+    document.getElementById('msgText').value = '';
+    document.getElementById('msgLink').value = '';
+    loadMessages();
+  }
 }
 
-setInterval(loadMsgs, 5000);
-loadMsgs();
+document.querySelectorAll('.nav-btn[data-cat]').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCat = btn.dataset.cat;
+    loadMessages();
+  };
+});
+
+function openPanel(){
+  document.getElementById('panel').classList.add('show');
+  document.getElementById('pass').value = '';
+  document.getElementById('adminContent').classList.add('hidden');
+}
+
+function closePanel(){
+  document.getElementById('panel').classList.remove('show');
+}
+
+function checkPass(){
+  if(document.getElementById('pass').value === ADMIN_PASS){
+    document.getElementById('adminContent').classList.remove('hidden');
+  } else {
+    alert('❌ رمز اشتباه است!');
+  }
+}
+
+// بارگذاری اولیه
+loadMessages();
+
+// به‌روزرسانی لحظه‌ای — بلافاصله برای همه نمایش داده می‌شود
+supabase.channel('public:messages').on(
+  'postgres_changes',
+  { event: 'INSERT', schema: 'public', table: 'messages' },
+  () => loadMessages()
+).subscribe();
 </script>
 </body>
 </html>
