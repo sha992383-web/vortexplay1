@@ -1,172 +1,8 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VORTEXPLAY | فروشگاه آنلاین</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0a0a0c;
-            --card-bg: #141419;
-            --gold-primary: #ffd700;
-            --gold-light: #fff099;
-            --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
-            --text-color: #e0e0e0;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-        }
-
-        .gold-text {
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: bold;
-        }
-
-        .gold-btn {
-            background: var(--gold-gradient);
-            color: #000;
-            font-weight: bold;
-            border: none;
-            transition: all 0.3s ease;
-        }
-
-        .gold-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-        }
-
-        .navbar {
-            background-color: rgba(20, 20, 25, 0.95);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-            backdrop-filter: blur(10px);
-        }
-
-        .product-card {
-            background-color: var(--card-bg);
-            border: 1px solid rgba(255, 215, 0, 0.15);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .product-card:hover {
-            border-color: var(--gold-primary);
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.15);
-        }
-
-        .product-img {
-            height: 200px;
-            object-fit: cover;
-            width: 100%;
-        }
-
-        .admin-section {
-            background-color: var(--card-bg);
-            border: 1px solid var(--gold-primary);
-            border-radius: 15px;
-            display: none;
-        }
-
-        .form-control, .form-select {
-            background-color: #0f0f13;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            color: #fff;
-        }
-
-        .form-control:focus, .form-select:focus {
-            background-color: #1a1a22;
-            color: #fff;
-            border-color: var(--gold-primary);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
-        }
-
-        .loading-spinner {
-            color: var(--gold-primary);
-        }
-    </style>
-</head>
-<body>
-
-    <!-- هدر سایت -->
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <a class="navbar-brand fs-3 gold-text" href="#"><i class="fa-solid fa-gamepad me-2"></i>VORTEXPLAY</a>
-            <button class="btn gold-btn btn-sm" onclick="toggleAdminPanel()">
-                <i class="fa-solid fa-user-shield me-1"></i> پنل مدیریت
-            </button>
-        </div>
-    </nav>
-
-    <div class="container my-4">
-        
-        <!-- پنل مدیریت -->
-        <div id="adminPanel" class="admin-section p-4 mb-5">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="gold-text m-0"><i class="fa-solid fa-plus-circle me-2"></i>افزودن محصول جدید به دیتابیس</h4>
-                <button class="btn-close btn-close-white" onclick="toggleAdminPanel()"></button>
-            </div>
-            <form id="addProductForm" onsubmit="handleAddProduct(event)">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label">نام محصول</label>
-                        <input type="text" id="pTitle" class="form-control" required placeholder="مثال: اکانت پلاس یکساله">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">قیمت (تومان)</label>
-                        <input type="text" id="pPrice" class="form-control" required placeholder="مثال: ۱,۲۰۰,۰۰۰">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">دسته‌بندی</label>
-                        <select id="pCat" class="form-select">
-                            <option value="اشتراک‌ها">اشتراک‌ها</option>
-                            <option value="گیفت کارت">گیفت کارت</option>
-                            <option value="بازی‌ها">بازی‌ها</option>
-                            <option value="خدمات ویژه">خدمات ویژه</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">لینک عکس محصول</label>
-                        <input type="url" id="pImg" class="form-control" required placeholder="https://...">
-                    </div>
-                    <div class="col-md-12">
-                        <label class="form-label">لینک خرید (تلگرام / درگاه)</label>
-                        <input type="url" id="pLink" class="form-control" required placeholder="https://t.me/...">
-                    </div>
-                    <div class="col-12 text-end">
-                        <button type="submit" id="submitBtn" class="btn gold-btn px-4">
-                            <i class="fa-solid fa-cloud-arrow-up me-1"></i> ثبت و انتشار آنلاین
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <!-- لودینگ -->
-        <div id="loading" class="text-center my-5">
-            <div class="spinner-border loading-spinner" role="status"></div>
-            <p class="mt-2 text-muted">در حال دریافت محصولات از دیتابیس ابری...</p>
-        </div>
-
-        <!-- لیست محصولات -->
-        <div id="productGrid" class="row g-4" style="display: none;"></div>
-        
-    </div>
-
     <script>
         // تنظیمات دیتابیس آنلاین شما
-        const BIN_ID = '6ab5bbe7ac6210605af2b3d8'; //[span_2](start_span)[span_2](end_span)
-        const MASTER_KEY = '$2a$10$usLohOFjd/ytmzsresklbOlovg8YK7KKOL.E3BXVQ8hDCwG86FLf2'; //[span_3](start_span)[span_3](end_span)
-        const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+        const BIN_ID = '6ab5bbe7ac6210605af2b3d8';
+        const MASTER_KEY = '$2a$10$usLohOFjd/ytmzsresklbOlovg8YK7KKOL.E3BXVQ8hDCwG86FLf2';
+        const BASE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
         let currentProducts = [];
 
@@ -176,16 +12,22 @@
             panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
         }
 
-        // دریافت محصولات از دیتابیس آنلاین
+        // دریافت محصولات از دیتابیس آنلاین (بدون کاش مرورگر)
         async function fetchProducts() {
             try {
-                const res = await fetch(API_URL, {
-                    headers: { 'X-Master-Key': MASTER_KEY }
+                // اضافه کردن تایم‌استمپ برای شکستن کاش مرورگر در سیستم‌ها و مرورگرهای مختلف
+                const nocacheUrl = `${BASE_URL}/latest?t=${new Date().getTime()}`;
+                const res = await fetch(nocacheUrl, {
+                    headers: { 
+                        'X-Master-Key': MASTER_KEY,
+                        'Cache-Control': 'no-cache'
+                    }
                 });
                 const data = await res.json();
                 currentProducts = data.record.products || [];
                 renderProducts();
             } catch (err) {
+                console.error(err);
                 alert('خطا در دریافت اطلاعات از دیتابیس!');
             } finally {
                 document.getElementById('loading').style.display = 'none';
@@ -251,7 +93,9 @@
                 document.getElementById('addProductForm').reset();
                 toggleAdminPanel();
                 renderProducts();
+                alert('محصول با موفقیت در دیتابیس ابری ثبت شد!');
             } catch (err) {
+                console.error(err);
                 alert('خطا در ذخیره‌سازی محصول!');
             } finally {
                 submitBtn.disabled = false;
@@ -270,18 +114,21 @@
 
         // آپدیت ابری دیتابیس
         async function updateDatabase() {
-            await fetch(API_URL, {
+            const res = await fetch(BASE_URL, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-Master-Key': MASTER_KEY
+                    'X-Master-Key': MASTER_KEY,
+                    'X-Bin-Versioning': 'false'
                 },
                 body: JSON.stringify({ products: currentProducts })
             });
+
+            if (!res.ok) {
+                throw new Error('خطا در ثبت در دیتابیس');
+            }
         }
 
         // شروع برنامه
         fetchProducts();
     </script>
-</body>
-</html>
