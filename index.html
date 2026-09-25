@@ -3,393 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فروشگاه VORTEXPLAY</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <title>VORTEXPLAY | فروشگاه آنلاین</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #f39c12;
-            --bg: #0d0714;
-            --card-bg: #170d24;
+            --bg-dark: #0a0a0c;
+            --card-bg: #141419;
+            --gold-primary: #ffd700;
+            --gold-light: #fff099;
+            --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
+            --text-color: #e0e0e0;
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
 
         body {
-            background-color: var(--bg);
-            color: #fff;
-            padding-bottom: 80px;
+            background-color: var(--bg-dark);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
         }
 
-        header {
-            text-align: center;
-            padding: 25px 15px;
-            background: rgba(0,0,0,0.3);
+        .gold-text {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
         }
 
-        .logo {
-            width: 90px; height: 90px;
-            border-radius: 50%;
-            border: 3px solid var(--primary);
-            object-fit: cover;
-            margin-bottom: 10px;
-            background: #222;
-        }
-
-        h1 { color: var(--primary); font-size: 1.8rem; }
-
-        .cover-box {
-            max-width: 900px;
-            margin: 15px auto;
-            padding: 0 15px;
-        }
-
-        .cover-box img {
-            width: 100%;
-            max-height: 200px;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 1px solid var(--primary);
-            background: #222;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-
-        .cat-bar {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .cat-item {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .cat-item.active {
-            background: var(--primary);
+        .gold-btn {
+            background: var(--gold-gradient);
             color: #000;
             font-weight: bold;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--primary);
-            border-radius: 12px;
-            padding: 12px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            background: #333;
-        }
-
-        .price {
-            color: var(--primary);
-            font-weight: bold;
-            margin: 8px 0;
-        }
-
-        .btn-dl {
-            background: var(--primary);
-            color: #000;
-            text-decoration: none;
-            padding: 8px;
-            border-radius: 6px;
-            font-weight: bold;
-            display: block;
-        }
-
-        .admin-bar {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: #000;
-            border-top: 1px solid var(--primary);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .btn-admin {
-            background: var(--primary);
             border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .modal {
+        .gold-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .navbar {
+            background-color: rgba(20, 20, 25, 0.95);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            border-color: var(--gold-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.15);
+        }
+
+        .product-img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .admin-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--gold-primary);
+            border-radius: 15px;
             display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 999;
-            padding: 20px;
-            overflow-y: auto;
         }
 
-        .modal-box {
-            background: #170d24;
-            border: 2px solid var(--primary);
-            border-radius: 12px;
-            max-width: 450px;
-            margin: 30px auto;
-            padding: 20px;
-            position: relative;
-        }
-
-        .close { position: absolute; left: 15px; top: 10px; cursor: pointer; font-size: 1.5rem; }
-
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            background: #000;
-            border: 1px solid var(--primary);
+        .form-control, .form-select {
+            background-color: #0f0f13;
+            border: 1px solid rgba(255, 215, 0, 0.3);
             color: #fff;
-            border-radius: 6px;
-            outline: none;
         }
 
-        .loading {
-            text-align: center;
-            color: var(--primary);
-            padding: 15px;
-            font-size: 0.95rem;
+        .form-control:focus, .form-select:focus {
+            background-color: #1a1a22;
+            color: #fff;
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .loading-spinner {
+            color: var(--gold-primary);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <img id="logoImg" class="logo" src="https://api.dicebear.com/7.x/identicon/svg?seed=vortex" alt="لوگو">
-        <h1 id="shopTitle">فروشگاه VORTEXPLAY</h1>
-    </header>
-
-    <div class="cover-box">
-        <img id="coverImg" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800" alt="کاور">
-    </div>
-
-    <div class="container">
-        <div class="cat-bar" id="catBar"></div>
-        <div id="loadingBox" class="loading">⏳ در حال دریافت محصولات از سرور...</div>
-        <div class="grid" id="productGrid"></div>
-    </div>
-
-    <div class="admin-bar">
-        <span>🌐 سرور آنلاین فعال است</span>
-        <button class="btn-admin" onclick="showModal()">⚙️ مدیریت</button>
-    </div>
-
-    <div id="modal" class="modal">
-        <div class="modal-box">
-            <span class="close" onclick="hideModal()">&times;</span>
-
-            <div id="loginBox">
-                <h3 style="color:var(--primary); margin-bottom:15px;">ورود به مدیریت</h3>
-                <input type="text" id="passInput" placeholder="رمز عبور (1234)">
-                <button class="btn-admin" style="width:100%;" onclick="login()">ورود</button>
-                <p id="alertMsg" style="color:red; display:none; margin-top:10px; text-align:center;">رمز اشتباه است!</p>
-            </div>
-
-            <div id="panelBox" style="display:none;">
-                <h3 style="color:var(--primary); margin-bottom:10px;">➕ افزودن محصول</h3>
-                <input type="text" id="pTitle" placeholder="عنوان محصول">
-                <select id="pCat"></select>
-                <input type="text" id="pPrice" placeholder="قیمت (مثلا: ۵۰,۰۰۰ تومان)">
-                <input type="text" id="pImg" placeholder="لینک عکس محصول">
-                <input type="text" id="pLink" placeholder="لینک دانلود/خرید">
-                <button class="btn-admin" style="width:100%; background:#27ae60; color:#fff;" onclick="newProduct()">انتشار همگانی محصول</button>
-
-                <hr style="border-color:var(--primary); margin:15px 0;">
-
-                <h3 style="color:var(--primary); margin-bottom:10px;">📁 افزودن دسته‌بندی</h3>
-                <input type="text" id="cName" placeholder="نام دسته جدید">
-                <button class="btn-admin" style="width:100%;" onclick="newCategory()">افزودن دسته</button>
-
-                <hr style="border-color:var(--primary); margin:15px 0;">
-
-                <h3 style="color:var(--primary); margin-bottom:10px;">🎨 تغییر ظاهر</h3>
-                <input type="text" id="sTitle" placeholder="نام فروشگاه">
-                <input type="text" id="sLogo" placeholder="لینک لوگو">
-                <input type="text" id="sCover" placeholder="لینک کاور">
-                <button class="btn-admin" style="width:100%; background:#e67e22; color:#fff;" onclick="updateTheme()">ذخیره تغییرات ظاهر</button>
-            </div>
+    <!-- هدر سایت -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand fs-3 gold-text" href="#"><i class="fa-solid fa-gamepad me-2"></i>VORTEXPLAY</a>
+            <button class="btn gold-btn btn-sm" onclick="toggleAdminPanel()">
+                <i class="fa-solid fa-user-shield me-1"></i> پنل مدیریت
+            </button>
         </div>
+    </nav>
+
+    <div class="container my-4">
+        
+        <!-- پنل مدیریت -->
+        <div id="adminPanel" class="admin-section p-4 mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="gold-text m-0"><i class="fa-solid fa-plus-circle me-2"></i>افزودن محصول جدید به دیتابیس</h4>
+                <button class="btn-close btn-close-white" onclick="toggleAdminPanel()"></button>
+            </div>
+            <form id="addProductForm" onsubmit="handleAddProduct(event)">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">نام محصول</label>
+                        <input type="text" id="pTitle" class="form-control" required placeholder="مثال: اکانت پلاس یکساله">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">قیمت (تومان)</label>
+                        <input type="text" id="pPrice" class="form-control" required placeholder="مثال: ۱,۲۰۰,۰۰۰">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">دسته‌بندی</label>
+                        <select id="pCat" class="form-select">
+                            <option value="اشتراک‌ها">اشتراک‌ها</option>
+                            <option value="گیفت کارت">گیفت کارت</option>
+                            <option value="بازی‌ها">بازی‌ها</option>
+                            <option value="خدمات ویژه">خدمات ویژه</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">لینک عکس محصول</label>
+                        <input type="url" id="pImg" class="form-control" required placeholder="https://...">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">لینک خرید (تلگرام / درگاه)</label>
+                        <input type="url" id="pLink" class="form-control" required placeholder="https://t.me/...">
+                    </div>
+                    <div class="col-12 text-end">
+                        <button type="submit" id="submitBtn" class="btn gold-btn px-4">
+                            <i class="fa-solid fa-cloud-arrow-up me-1"></i> ثبت و انتشار آنلاین
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- لودینگ -->
+        <div id="loading" class="text-center my-5">
+            <div class="spinner-border loading-spinner" role="status"></div>
+            <p class="mt-2 text-muted">در حال دریافت محصولات از دیتابیس ابری...</p>
+        </div>
+
+        <!-- لیست محصولات -->
+        <div id="productGrid" class="row g-4" style="display: none;"></div>
+        
     </div>
 
     <script>
-        // دیتابیس مستقیم سرور اختصاصی بدون محدودیت CORS
-        const DB_URL = "https://kvdb.io/2H4pLhQ5Y6m9A3Z8vX1kNq/vortex_shop_store";
+        // تنظیمات دیتابیس آنلاین شما
+        const BIN_ID = '6ab5bbe7ac6210605af2b3d8'; //[span_2](start_span)[span_2](end_span)
+        const MASTER_KEY = '$2a$10$usLohOFjd/ytmzsresklbOlovg8YK7KKOL.E3BXVQ8hDCwG86FLf2'; //[span_3](start_span)[span_3](end_span)
+        const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-        let db = {
-            title: "فروشگاه VORTEXPLAY",
-            logo: "https://api.dicebear.com/7.x/identicon/svg?seed=vortex",
-            cover: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800",
-            categories: ["همه", "برنامه‌ها", "بازی‌ها"],
-            currentCat: "همه",
-            items: []
-        };
+        let currentProducts = [];
 
-        async function load() {
-            document.getElementById('loadingBox').style.display = 'block';
-            try {
-                let res = await fetch(DB_URL);
-                if(res.ok) {
-                    let data = await res.json();
-                    if(data && data.categories) db = data;
-                }
-            } catch(e) {
-                console.log("دریافت آنلاین ناموفق بود، داده‌های محلی استفاده شد.");
-            }
-            document.getElementById('loadingBox').style.display = 'none';
-            render();
+        // نمایش/مخفی‌سازی پنل مدیریت
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
         }
 
-        async function save() {
-            document.getElementById('loadingBox').innerText = '⏳ در حال ثبت همگانی در سرور...';
-            document.getElementById('loadingBox').style.display = 'block';
+        // دریافت محصولات از دیتابیس آنلاین
+        async function fetchProducts() {
             try {
-                await fetch(DB_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(db)
+                const res = await fetch(API_URL, {
+                    headers: { 'X-Master-Key': MASTER_KEY }
                 });
-            } catch(e) {
-                alert('خطا در ذخیره‌سازی سرور!');
+                const data = await res.json();
+                currentProducts = data.record.products || [];
+                renderProducts();
+            } catch (err) {
+                alert('خطا در دریافت اطلاعات از دیتابیس!');
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('productGrid').style.display = 'flex';
             }
-            document.getElementById('loadingBox').style.display = 'none';
-            render();
         }
 
-        function render() {
-            document.getElementById('shopTitle').innerText = db.title;
-            if(db.logo) document.getElementById('logoImg').src = db.logo;
-            if(db.cover) document.getElementById('coverImg').src = db.cover;
-
-            let catBar = document.getElementById('catBar');
-            let pCat = document.getElementById('pCat');
-            catBar.innerHTML = '';
-            pCat.innerHTML = '';
-
-            if(!db.categories) db.categories = ["همه"];
-
-            db.categories.forEach(cat => {
-                let btn = document.createElement('button');
-                btn.className = `cat-item ${db.currentCat === cat ? 'active' : ''}`;
-                btn.innerText = cat;
-                btn.onclick = () => { db.currentCat = cat; render(); };
-                catBar.appendChild(btn);
-
-                if(cat !== "همه") {
-                    pCat.innerHTML += `<option value="${cat}">${cat}</option>`;
-                }
-            });
-
-            let grid = document.getElementById('productGrid');
+        // رندر کردن کارت‌های محصولات
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
             grid.innerHTML = '';
 
-            let list = db.currentCat === "همه" 
-                ? db.items 
-                : db.items.filter(x => x.cat === db.currentCat);
-
-            if(!list || list.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#888; padding:30px 0;">هیچ محصولی ثبت نشده است.</p>';
+            if (currentProducts.length === 0) {
+                grid.innerHTML = '<div class="col-12 text-center text-muted py-5">هنوز هیچ محصولی اضافه نشده است.</div>';
                 return;
             }
 
-            list.forEach(item => {
+            currentProducts.forEach((p, index) => {
                 grid.innerHTML += `
-                    <div class="card">
-                        <img src="${item.img || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400'}" alt="عکس">
-                        <h4>${item.title}</h4>
-                        <div class="price">${item.price}</div>
-                        <a href="${item.link}" target="_blank" class="btn-dl">📥 دریافت / دانلود</a>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="product-card h-100 d-flex flex-column">
+                            <img src="${p.img}" class="product-img" alt="${p.title}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+                            <div class="card-body d-flex flex-column justify-content-between p-3">
+                                <div>
+                                    <span class="badge bg-secondary mb-2">${p.cat}</span>
+                                    <h5 class="card-title text-white mb-2">${p.title}</h5>
+                                    <p class="gold-text fs-5 mb-3">${p.price} تومان</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="${p.link}" target="_blank" class="btn gold-btn w-100">
+                                        <i class="fa-solid fa-cart-shopping me-1"></i> خرید
+                                    </a>
+                                    <button onclick="deleteProduct(${index})" class="btn btn-outline-danger btn-sm" title="حذف">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `;
             });
         }
 
-        function login() {
-            let pass = document.getElementById('passInput').value.trim();
-            pass = pass.replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+        // افزودن محصول جدید
+        async function handleAddProduct(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'در حال ذخیره‌سازی...';
 
-            if(pass === "1234") {
-                document.getElementById('loginBox').style.display = 'none';
-                document.getElementById('panelBox').style.display = 'block';
-                document.getElementById('sTitle').value = db.title;
-                document.getElementById('sLogo').value = db.logo;
-                document.getElementById('sCover').value = db.cover;
-            } else {
-                document.getElementById('alertMsg').style.display = 'block';
+            const newProduct = {
+                title: document.getElementById('pTitle').value,
+                price: document.getElementById('pPrice').value,
+                cat: document.getElementById('pCat').value,
+                img: document.getElementById('pImg').value,
+                link: document.getElementById('pLink').value
+            };
+
+            currentProducts.push(newProduct);
+
+            try {
+                await updateDatabase();
+                document.getElementById('addProductForm').reset();
+                toggleAdminPanel();
+                renderProducts();
+            } catch (err) {
+                alert('خطا در ذخیره‌سازی محصول!');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up me-1"></i> ثبت و انتشار آنلاین';
             }
         }
 
-        async function newProduct() {
-            let title = document.getElementById('pTitle').value;
-            let cat = document.getElementById('pCat').value;
-            let price = document.getElementById('pPrice').value || 'رایگان';
-            let img = document.getElementById('pImg').value;
-            let link = document.getElementById('pLink').value || '#';
-
-            if(!title) return alert('عنوان محصول را بنویسید');
-
-            if(!db.items) db.items = [];
-            db.items.push({ title, cat, price, img, link });
-            await save();
-            alert('محصول ثبت شد و برای تمامی کاربران قابل دیدن است!');
-            document.getElementById('pTitle').value = '';
-        }
-
-        async function newCategory() {
-            let name = document.getElementById('cName').value.trim();
-            if(name && !db.categories.includes(name)) {
-                db.categories.push(name);
-                await save();
-                alert('دسته اضافه شد!');
-                document.getElementById('cName').value = '';
+        // حذف محصول
+        async function deleteProduct(index) {
+            if (confirm('آیا از حذف این محصول اطمینان دارید؟')) {
+                currentProducts.splice(index, 1);
+                renderProducts();
+                await updateDatabase();
             }
         }
 
-        async function updateTheme() {
-            db.title = document.getElementById('sTitle').value || db.title;
-            db.logo = document.getElementById('sLogo').value || db.logo;
-            db.cover = document.getElementById('sCover').value || db.cover;
-            await save();
-            alert('تغییرات ظاهر ثبت شد!');
+        // آپدیت ابری دیتابیس
+        async function updateDatabase() {
+            await fetch(API_URL, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': MASTER_KEY
+                },
+                body: JSON.stringify({ products: currentProducts })
+            });
         }
 
-        function showModal() { document.getElementById('modal').style.display = 'block'; }
-        function hideModal() { document.getElementById('modal').style.display = 'none'; }
-
-        load();
+        // شروع برنامه
+        fetchProducts();
     </script>
 </body>
 </html>
