@@ -9,11 +9,9 @@
 /* ========== محافظت ========== */
 * {
   margin: 0; padding: 0; box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-family: Tahoma, 'Segoe UI', sans-serif;
   -webkit-user-select: none; user-select: none;
 }
-
-/* ========== پس‌زمینه سلطنتی ========== */
 body {
   background: linear-gradient(135deg, #050510 0%, #1A1540 50%, #2B1B5C 100%);
   min-height: 100vh; color: #fff; overflow-x: hidden;
@@ -22,11 +20,9 @@ body {
   position: fixed; inset: 0; z-index: 0;
   background: 
     radial-gradient(circle at 15% 25%, rgba(255, 215, 0, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 85% 75%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 165, 0, 0.08) 0%, transparent 60%);
+    radial-gradient(circle at 85% 75%, rgba(138, 43, 226, 0.15) 0%, transparent 50%);
   pointer-events: none;
 }
-
 /* ========== هدر ========== */
 .header {
   position: relative; z-index: 2; padding: 30px 20px; text-align: center;
@@ -40,10 +36,7 @@ body {
   animation: shine 3s linear infinite; letter-spacing: 2px;
 }
 @keyframes shine { to { background-position: 200% center; } }
-.subtitle {
-  color: #D4AF37; margin-top: 10px; font-size: 16px; letter-spacing: 1px;
-}
-
+.subtitle { color: #D4AF37; margin-top: 10px; font-size: 16px; }
 /* ========== ناوبری ========== */
 .nav {
   position: relative; z-index: 2; max-width: 750px; margin: 30px auto; padding: 0 15px;
@@ -56,18 +49,13 @@ body {
   font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.35s;
   backdrop-filter: blur(10px);
 }
-.nav-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.25);
-  border-color: #FFD700;
-}
+.nav-btn:hover { transform: translateY(-3px); }
 .nav-btn.active {
-  background: linear-gradient(90deg, #FFD700, #DAA520, #B8860B);
+  background: linear-gradient(90deg, #FFD700, #DAA520);
   color: #000; border-color: transparent;
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.35);
 }
-
-/* ========== کارت‌های سلطنتی ========== */
+/* ========== کارت‌ها ========== */
 .container {
   position: relative; z-index: 2; max-width: 1150px; margin: 30px auto; padding: 0 20px 60px;
 }
@@ -81,59 +69,37 @@ body {
   transition: 0.4s; backdrop-filter: blur(12px);
 }
 .card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-6px);
   border-color: #FFD700;
-  box-shadow: 0 20px 50px rgba(255, 215, 0, 0.15), 0 0 30px rgba(138, 43, 226, 0.1);
+  box-shadow: 0 15px 40px rgba(255, 215, 0, 0.12);
 }
 .card-banner {
   height: 180px;
   background: linear-gradient(135deg, #4B0082, #800080, #9932CC);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 4rem; position: relative; overflow: hidden;
-}
-.card-banner::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.15), transparent);
+  display: flex; align-items: center; justify-content: center; font-size: 4rem;
 }
 .card-body { padding: 24px; }
 .card-cat {
-  display: inline-block;
-  background: rgba(255, 215, 0, 0.15);
+  display: inline-block; background: rgba(255, 215, 0, 0.15);
   color: #FFD700; padding: 7px 18px; border-radius: 30px;
   font-size: 13px; font-weight: bold; margin-bottom: 15px;
 }
-.card-title {
-  font-size: 20px; font-weight: 900; color: #FFE4B5; margin-bottom: 12px;
-}
-.card-text {
-  color: #DDA0DD; font-size: 14px; line-height: 1.9;
-  margin-bottom: 20px; white-space: pre-wrap;
-}
+.card-title { font-size: 20px; font-weight: 900; color: #FFE4B5; margin-bottom: 12px; }
+.card-text { color: #DDA0DD; font-size: 14px; line-height: 1.9; margin-bottom: 20px; white-space: pre-wrap; }
 .card-link {
   display: block; background: linear-gradient(90deg, #FFD700, #FF8C00);
   color: #000; text-decoration: none; padding: 13px; border-radius: 14px;
-  text-align: center; font-weight: 900; font-size: 15px; transition: 0.3s;
+  text-align: center; font-weight: 900; transition: 0.3s;
 }
-.card-link:hover { opacity: 0.95; transform: scale(1.03); }
-.card-actions { display: flex; gap: 10px; margin-top: 18px; }
-.small-btn { flex: 1; padding: 10px; border: none; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: bold; }
-.btn-edit { background: linear-gradient(90deg, #FFD700, #FFA500); color: #000; }
-.btn-del { background: linear-gradient(90deg, #DC143C, #B22222); color: #fff; }
 .empty { text-align: center; padding: 100px 20px; color: #9370DB; font-size: 17px; }
-
 /* ========== دکمه مدیریت ========== */
-.admin-float {
-  position: fixed; top: 20px; left: 20px; z-index: 100;
-}
+.admin-float { position: fixed; top: 20px; left: 20px; z-index: 100; }
 .admin-btn {
   width: 60px; height: 60px; border-radius: 50%; border: none;
-  background: linear-gradient(90deg, #FFD700, #FF8C00, #FFD700);
-  background-size: 200% auto; animation: shine 2s linear infinite;
-  font-size: 24px; cursor: pointer; box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+  background: linear-gradient(90deg, #FFD700, #FF8C00);
+  font-size: 24px; cursor: pointer; box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
   transition: 0.3s; display: none;
 }
-.admin-btn:hover { transform: scale(1.15); }
-
 /* ========== مودال ========== */
 .modal {
   position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92);
@@ -143,18 +109,15 @@ body {
 .modal.show { display: flex; }
 .modal-box {
   background: linear-gradient(145deg, #1E1040, #2A1860);
-  border-radius: 24px; padding: 35px;
-  border: 2px solid #FFD700; width: 100%; max-width: 480px;
-  box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
+  border-radius: 24px; padding: 35px; border: 2px solid #FFD700;
+  width: 100%; max-width: 480px;
 }
-.modal-title {
-  color: #FFD700; margin-bottom: 22px; font-size: 21px; font-weight: 900;
-}
+.modal-title { color: #FFD700; margin-bottom: 22px; font-size: 21px; font-weight: 900; }
 input, textarea, select {
   width: 100%; padding: 15px; border-radius: 12px;
   border: 1px solid rgba(255, 215, 0, 0.3);
-  background: rgba(10, 5, 30, 0.8);
-  color: #FFE4B5; margin: 8px 0; font-size: 15px;
+  background: rgba(10, 5, 30, 0.8); color: #FFE4B5;
+  margin: 8px 0; font-size: 15px;
 }
 .btn {
   width: 100%; padding: 15px; border-radius: 12px; border: none;
@@ -164,9 +127,7 @@ input, textarea, select {
 .btn-purple { background: linear-gradient(90deg, #9932CC, #8B008B); color: #fff; }
 .btn-dark { background: #2F1F4C; color: #DDA0DD; border: 1px solid rgba(255, 215, 0, 0.2); }
 .btn:hover { transform: scale(1.03); }
-
-/* ========== کد خروجی ========== */
-.code-panel {
+.code-box {
   background: #0A0520; border: 1px solid #FFD700; border-radius: 12px;
   padding: 18px; margin: 15px 0; direction: ltr; text-align: left;
   font-size: 11px; color: #98FB98; max-height: 240px; overflow-y: auto;
@@ -205,114 +166,95 @@ input, textarea, select {
 <!-- پنل ورود -->
 <div class="modal" id="loginModal">
   <div class="modal-box">
-    <h2 class="modal-title">🔐 ورود به پنل مدیریت</h2>
-    <input type="password" id="passInput" placeholder="رمز ورود را وارد کن">
-    <button class="btn btn-gold" onclick="checkPass()">ورود به سیستم</button>
+    <h2 class="modal-title">🔐 ورود به مدیریت</h2>
+    <input type="password" id="passInput" placeholder="رمز ورود: 1234">
+    <button class="btn btn-gold" onclick="checkPass()">ورود</button>
     <button class="btn btn-dark" onclick="closeModal('loginModal')">بستن</button>
   </div>
 </div>
 
-<!-- فرم افزودن/ویرایش -->
+<!-- فرم افزودن -->
 <div class="modal" id="formModal">
   <div class="modal-box">
-    <h2 class="modal-title" id="formHeading">✍️ افزودن محصول جدید</h2>
+    <h2 class="modal-title" id="formHeading">✍️ افزودن محصول</h2>
     <input type="hidden" id="editId">
     <select id="catSelect">
       <option value="بازی">🎮 بازی</option>
       <option value="پیلود">📦 پیلود</option>
       <option value="بکاپ">💾 بکاپ و آموزش</option>
     </select>
-    <input type="text" id="titleInput" placeholder="عنوان محصول">
-    <textarea id="descInput" rows="5" placeholder="توضیحات، معرفی و ویژگی‌ها"></textarea>
-    <input type="url" id="linkInput" placeholder="لینک دانلود / فایل">
-    <button class="btn btn-gold" onclick="saveItem()">ذخیره و انتشار</button>
+    <input type="text" id="titleInput" placeholder="عنوان">
+    <textarea id="descInput" rows="5" placeholder="توضیحات"></textarea>
+    <input type="url" id="linkInput" placeholder="لینک دانلود">
+    <button class="btn btn-gold" onclick="saveItem()">ذخیره</button>
     <button class="btn btn-dark" onclick="closeModal('formModal')">بستن</button>
   </div>
 </div>
 
-<!-- کد نهایی برای جایگزینی -->
+<!-- کد نهایی -->
 <div class="modal" id="exportModal">
   <div class="modal-box" style="max-width: 620px;">
-    <h2 class="modal-title">✅ کد کامل سایت آماده است</h2>
-    <p style="color:#DDA0DD;font-size:13px;margin-bottom:12px;line-height:1.7;">
-      کد زیر را کپی کن ← در GitHub فایل index.html را باز کن ← همه را پاک کن ← کد جدید را جایگذاری کن ← Commit کن.<br>
-      سایت بلافاصله برای همه کاربران به‌روز می‌شود ✅
-    </p>
-    <div class="code-panel" id="codeOutput"></div>
-    <button class="btn btn-purple" onclick="copyAllCode()">📋 کپی کامل کد</button>
+    <h2 class="modal-title">✅ کد جدید سایت</h2>
+    <p style="color:#DDA0DD;font-size:13px;margin-bottom:12px;">کپی کن → فایل index.html را باز کن → جایگزین کن → ذخیره کن</p>
+    <div class="code-box" id="codeOutput"></div>
+    <button class="btn btn-purple" onclick="copyCode()">📋 کپی کد</button>
     <button class="btn btn-dark" onclick="closeModal('exportModal')">بستن</button>
   </div>
 </div>
 
 <script>
 // ⚙️ تنظیمات
-const ADMIN_PASS = "1234"; // رمز مدیریت
-const STORE_KEY = "vortex_royal_data";
+const ADMIN_PASS = "1234";
+const STORE_KEY = "vortex_data";
 const icons = { بازی: "🎮", پیلود: "📦", بکاپ: "💾" };
 
 let isAdmin = false, activeCat = "همه", items = [];
 
-// ========== بارگذاری اولیه ==========
+// ========== بارگذاری ==========
 function init() {
   const saved = localStorage.getItem(STORE_KEY);
   items = saved ? JSON.parse(saved) : [];
   render();
 }
 
-// ========== نمایش کارت‌ها ==========
+// ========== نمایش ==========
 function render() {
-  const grid = document.getElementById("cardGrid");
-  const filtered = activeCat === "همه" ? items : items.filter(i => i.category === activeCat);
-
-  if (!filtered.length) {
-    grid.innerHTML = `<p class="empty">هنوز محصولی اضافه نشده ✨ از پنل مدیریت اولین محصول را ثبت کن</p>`;
-    return;
-  }
-
-  grid.innerHTML = filtered.map(i => `
+  const g = document.getElementById("cardGrid");
+  const list = activeCat === "همه" ? items : items.filter(i => i.cat === activeCat);
+  g.innerHTML = list.length ? list.map(i => `
     <div class="card">
-      <div class="card-banner">${icons[i.category]}</div>
+      <div class="card-banner">${icons[i.cat]}</div>
       <div class="card-body">
-        <span class="card-cat">${escape(i.category)}</span>
-        <h3 class="card-title">${escape(i.title)}</h3>
-        <p class="card-text">${escape(i.description)}</p>
-        <a href="${escape(i.link)}" target="_blank" class="card-link" rel="noopener">
-          <i class="fas fa-download"></i> دریافت و دانلود
+        <span class="card-cat">${esc(i.cat)}</span>
+        <h3 class="card-title">${esc(i.title)}</h3>
+        <p class="card-text">${esc(i.desc)}</p>
+        <a href="${esc(i.link)}" target="_blank" class="card-link" rel="noopener">
+          <i class="fas fa-download"></i> دریافت
         </a>
         ${isAdmin ? `
-          <div class="card-actions">
-            <button class="small-btn btn-edit" onclick="editItem(${i.id})">✏️ ویرایش</button>
-            <button class="small-btn btn-del" onclick="delItem(${i.id})">🗑️ حذف</button>
+          <div style="display:flex;gap:10px;margin-top:15px">
+            <button class="btn" style="flex:1;padding:10px;font-size:13px;background:#FFD700;color:#000" onclick="editItem(${i.id})">ویرایش</button>
+            <button class="btn" style="flex:1;padding:10px;font-size:13px;background:#DC143C;color:#fff" onclick="delItem(${i.id})">حذف</button>
           </div>
         ` : ""}
       </div>
     </div>
-  `).join("");
+  `).join("") : `<p class="empty">هنوز محصولی اضافه نشده ✨</p>`;
 }
 
-function escape(text) {
-  const div = document.createElement("div");
-  div.textContent = text;
-  return div.innerHTML;
-}
+function esc(t) { const d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
 
-// ========== فیلتر دسته‌بندی ==========
-function filter(category, btn) {
-  activeCat = category;
+// ========== فیلتر ==========
+function filter(cat, btn) {
+  activeCat = cat;
   document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
   render();
 }
 
 // ========== مدیریت ==========
-function openLogin() {
-  document.getElementById("loginModal").classList.add("show");
-  document.getElementById("passInput").value = "";
-}
-
-function closeModal(id) {
-  document.getElementById(id).classList.remove("show");
-}
+function openLogin() { document.getElementById("loginModal").classList.add("show"); }
+function closeModal(id) { document.getElementById(id).classList.remove("show"); }
 
 function checkPass() {
   if (document.getElementById("passInput").value === ADMIN_PASS) {
@@ -321,137 +263,26 @@ function checkPass() {
     closeModal("loginModal");
     openForm();
     render();
-  } else {
-    alert("❌ رمز اشتباه است! دوباره تلاش کن.");
-  }
+  } else alert("❌ رمز اشتباه!");
 }
 
-function openForm(editData = null) {
-  document.getElementById("formHeading").textContent = editData ? "✏️ ویرایش محصول" : "✍️ افزودن محصول جدید";
-  document.getElementById("editId").value = editData ? editData.id : "";
-  document.getElementById("catSelect").value = editData ? editData.category : "بازی";
-  document.getElementById("titleInput").value = editData ? editData.title : "";
-  document.getElementById("descInput").value = editData ? editData.description : "";
-  document.getElementById("linkInput").value = editData ? editData.link : "";
+function openForm(edit = null) {
+  document.getElementById("formHeading").textContent = edit ? "ویرایش محصول" : "افزودن محصول";
+  document.getElementById("editId").value = edit ? edit.id : "";
+  document.getElementById("catSelect").value = edit ? edit.cat : "بازی";
+  document.getElementById("titleInput").value = edit ? edit.title : "";
+  document.getElementById("descInput").value = edit ? edit.desc : "";
+  document.getElementById("linkInput").value = edit ? edit.link : "";
   document.getElementById("formModal").classList.add("show");
 }
 
-function editItem(id) {
-  const item = items.find(i => i.id === id);
-  if (item) openForm(item);
-}
-
+function editItem(id) { openForm(items.find(i => i.id === id)); }
 function delItem(id) {
-  if (!confirm("⚠️ مطمئنی؟ این محصول برای همیشه حذف می‌شود!")) return;
-  items = items.filter(i => i.id !== id);
-  saveData();
-  render();
-  setTimeout(showExport, 300);
+  if (confirm("مطمئنی؟ حذف می‌شود!")) {
+    items = items.filter(i => i.id !== id);
+    save(); render(); showExport();
+  }
 }
 
 function saveItem() {
-  const category = document.getElementById("catSelect").value;
-  const title = document.getElementById("titleInput").value.trim();
-  const description = document.getElementById("descInput").value.trim();
-  const link = document.getElementById("linkInput").value.trim() || "#";
-  const editId = document.getElementById("editId").value;
-
-  if (!title || !description) {
-    alert("⚠️ لطفاً عنوان و توضیحات را کامل کن!");
-    return;
-  }
-
-  if (editId) {
-    const idx = items.findIndex(i => i.id == editId);
-    if (idx !== -1) {
-      items[idx] = { id: +editId, category, title, description, link };
-    }
-  } else {
-    const newId = items.length ? Math.max(...items.map(i => i.id)) + 1 : 1;
-    items.unshift({ id: newId, category, title, description, link });
-  }
-
-  closeModal("formModal");
-  saveData();
-  render();
-  setTimeout(showExport, 300);
-}
-
-function saveData() {
-  localStorage.setItem(STORE_KEY, JSON.stringify(items));
-}
-
-// ========== تولید کد نهایی ==========
-function showExport() {
-  const dataStr = JSON.stringify(items);
-  document.getElementById("codeOutput").textContent = buildFinalCode(dataStr);
-  document.getElementById("exportModal").classList.add("show");
-}
-
-function buildFinalCode(data) {
-  return `<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>VORTEXPLAY | ویترین سلطنتی</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Tahoma,sans-serif;user-select:none}
-body{background:linear-gradient(135deg,#050510 0%,#1A1540 50%,#2B1B5C 100%);min-height:100vh;color:#fff;overflow-x:hidden}
-.bg-glow{position:fixed;inset:0;background:radial-gradient(circle at 15% 25%,rgba(255,215,0,.12) 0%,transparent 50%),radial-gradient(circle at 85% 75%,rgba(138,43,226,.15) 0%,transparent 50%),radial-gradient(circle at 50% 50%,rgba(255,165,0,.08) 0%,transparent 60%);pointer-events:none;z-index:0}
-.header{position:relative;z-index:2;padding:30px 20px;text-align:center;border-bottom:1px solid rgba(255,215,0,.15);background:rgba(5,5,16,.6);backdrop-filter:blur(10px)}
-.logo{font-size:2.5rem;font-weight:900;background:linear-gradient(90deg,#FFD700,#FFA500,#FF6B00,#FFD700);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite;letter-spacing:2px}
-@keyframes shine{to{background-position:200% center}}
-.subtitle{color:#D4AF37;margin-top:10px;font-size:16px;letter-spacing:1px}
-.nav{position:relative;z-index:2;max-width:750px;margin:30px auto;padding:0 15px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
-.nav-btn{background:linear-gradient(135deg,rgba(184,134,11,.25),rgba(138,43,226,.25));border:1px solid rgba(255,215,0,.3);padding:15px 28px;border-radius:50px;color:#FFE4B5;font-size:15px;font-weight:bold;cursor:pointer;transition:.35s;backdrop-filter:blur(10px)}
-.nav-btn.active{background:linear-gradient(90deg,#FFD700,#DAA520,#B8860B);color:#000;border-color:transparent;box-shadow:0 0 30px rgba(255,215,0,.4)}
-.container{position:relative;z-index:2;max-width:1150px;margin:30px auto;padding:0 20px 60px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px}
-.card{background:linear-gradient(145deg,rgba(30,20,60,.7),rgba(50,30,90,.6));border-radius:24px;overflow:hidden;border:1px solid rgba(255,215,0,.2);transition:.4s;backdrop-filter:blur(12px)}
-.card:hover{transform:translateY(-8px) scale(1.02);border-color:#FFD700;box-shadow:0 20px 50px rgba(255,215,0,.15),0 0 30px rgba(138,43,226,.1)}
-.card-banner{height:180px;background:linear-gradient(135deg,#4B0082,#800080,#9932CC);display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden}
-.card-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(45deg,transparent,rgba(255,215,0,.15),transparent)}
-.card-body{padding:24px}
-.card-cat{display:inline-block;background:rgba(255,215,0,.15);color:#FFD700;padding:7px 18px;border-radius:30px;font-size:13px;font-weight:bold;margin-bottom:15px}
-.card-title{font-size:20px;font-weight:900;color:#FFE4B5;margin-bottom:12px}
-.card-text{color:#DDA0DD;font-size:14px;line-height:1.9;margin-bottom:20px;white-space:pre-wrap}
-.card-link{display:block;background:linear-gradient(90deg,#FFD700,#FF8C00);color:#000;text-decoration:none;padding:13px;border-radius:14px;text-align:center;font-weight:900;font-size:15px}
-.empty{text-align:center;padding:100px 20px;color:#9370DB;font-size:17px}
-</style>
-</head>
-<body oncontextmenu="return false;">
-<div class="bg-glow"></div>
-<header class="header"><h1 class="logo">👑 VORTEXPLAY</h1><p class="subtitle">پایگاه سلطنتی دانلود و محصولات گیمینگ</p></header>
-<nav class="nav">
-  <button class="nav-btn active" onclick="filter('همه',this)">همه محصولات</button>
-  <button class="nav-btn" onclick="filter('بازی',this)">🎮 بازی‌ها</button>
-  <button class="nav-btn" onclick="filter('پیلود',this)">📦 پیلود</button>
-  <button class="nav-btn" onclick="filter('بکاپ',this)">💾 بکاپ و آموزش</button>
-</nav>
-<main class="container"><div class="grid" id="cardGrid"></div></main>
-<script>
-const items = ${data};
-const icons = {بازی:"🎮",پیلود:"📦",بکاپ:"💾"};
-let activeCat = "همه";
-function render(){const g=document.getElementById("cardGrid"),l="همه"===activeCat?items:items.filter(i=>i.category===activeCat);g.innerHTML=l.length?l.map(i=>'<div class="card"><div class="card-banner">'+icons[i.category]+'</div><div class="card-body"><span class="card-cat">'+e(i.category)+'</span><h3 class="card-title">'+e(i.title)+'</h3><p class="card-text">'+e(i.description)+'</p><a href="'+e(i.link)+'" target="_blank" class="card-link" rel="noopener"><i class="fas fa-download"></i> دریافت و دانلود</a></div></div>').join(""):'<p class="empty">هنوز محصولی اضافه نشده ✨</p>'}
-function e(t){const d=document.createElement("div");d.textContent=t;return d.innerHTML}
-function filter(c,b){activeCat=c;document.querySelectorAll(".nav-btn").forEach(x=>x.classList.remove("active"));b.classList.add("active");render()}
-render();
-</script>
-</body>
-</html>`;
-}
-
-function copyAllCode() {
-  navigator.clipboard.writeText(document.getElementById("codeOutput").textContent).then(() => {
-    alert("✅ کد با موفقیت کپی شد!\n\nمراحل بعدی:\n۱. برو به مخزن گیت‌هاب خودت\n۲. فایل index.html را باز کن\n۳. همه محتوا را حذف کن\n۴. کد جدید را جایگذاری کن\n۵. روی Commit changes بزن\n۶. سایت آپدیت شد! 🎉");
-  });
-}
-
-// شروع برنامه
-init();
-</script>
-</body>
-</html>
+  const cat = document.ge
