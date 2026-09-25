@@ -1,134 +1,342 @@
-    <script>
-        // تنظیمات دیتابیس آنلاین شما
-        const BIN_ID = '6ab5bbe7ac6210605af2b3d8';
-        const MASTER_KEY = '$2a$10$usLohOFjd/ytmzsresklbOlovg8YK7KKOL.E3BXVQ8hDCwG86FLf2';
-        const BASE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="فروشگاه آنلاین من">
+  <title>فروشگاه من</title>
 
-        let currentProducts = [];
+  <style>
+    :root {
+      --bg: #080b14;
+      --panel: #121827;
+      --panel2: #182238;
+      --primary: #00e5ff;
+      --secondary: #ff3cac;
+      --text: #f5f7ff;
+      --muted: #a9b4c9;
+      --success: #35e59b;
+    }
 
-        // نمایش/مخفی‌سازی پنل مدیریت
-        function toggleAdminPanel() {
-            const panel = document.getElementById('adminPanel');
-            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        // دریافت محصولات از دیتابیس آنلاین (بدون کاش مرورگر)
-        async function fetchProducts() {
-            try {
-                // اضافه کردن تایم‌استمپ برای شکستن کاش مرورگر در سیستم‌ها و مرورگرهای مختلف
-                const nocacheUrl = `${BASE_URL}/latest?t=${new Date().getTime()}`;
-                const res = await fetch(nocacheUrl, {
-                    headers: { 
-                        'X-Master-Key': MASTER_KEY,
-                        'Cache-Control': 'no-cache'
-                    }
-                });
-                const data = await res.json();
-                currentProducts = data.record.products || [];
-                renderProducts();
-            } catch (err) {
-                console.error(err);
-                alert('خطا در دریافت اطلاعات از دیتابیس!');
-            } finally {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('productGrid').style.display = 'flex';
-            }
-        }
+    body {
+      color: var(--text);
+      font-family: Tahoma, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(0, 229, 255, .13), transparent 27rem),
+        radial-gradient(circle at bottom left, rgba(255, 60, 172, .12), transparent 25rem),
+        var(--bg);
+    }
 
-        // رندر کردن کارت‌های محصولات
-        function renderProducts() {
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = '';
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      background: rgba(8, 11, 20, .88);
+      backdrop-filter: blur(14px);
+    }
 
-            if (currentProducts.length === 0) {
-                grid.innerHTML = '<div class="col-12 text-center text-muted py-5">هنوز هیچ محصولی اضافه نشده است.</div>';
-                return;
-            }
+    .nav {
+      width: min(1120px, 92%);
+      min-height: 72px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
 
-            currentProducts.forEach((p, index) => {
-                grid.innerHTML += `
-                    <div class="col-md-4 col-sm-6">
-                        <div class="product-card h-100 d-flex flex-column">
-                            <img src="${p.img}" class="product-img" alt="${p.title}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
-                            <div class="card-body d-flex flex-column justify-content-between p-3">
-                                <div>
-                                    <span class="badge bg-secondary mb-2">${p.cat}</span>
-                                    <h5 class="card-title text-white mb-2">${p.title}</h5>
-                                    <p class="gold-text fs-5 mb-3">${p.price} تومان</p>
-                                </div>
-                                <div class="d-flex gap-2">
-                                    <a href="${p.link}" target="_blank" class="btn gold-btn w-100">
-                                        <i class="fa-solid fa-cart-shopping me-1"></i> خرید
-                                    </a>
-                                    <button onclick="deleteProduct(${index})" class="btn btn-outline-danger btn-sm" title="حذف">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+    .logo {
+      color: var(--primary);
+      font-size: 1.35rem;
+      font-weight: bold;
+      text-decoration: none;
+      text-shadow: 0 0 15px var(--primary);
+    }
 
-        // افزودن محصول جدید
-        async function handleAddProduct(e) {
-            e.preventDefault();
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = 'در حال ذخیره‌سازی...';
+    .cart {
+      color: white;
+      border: 1px solid rgba(0,229,255,.4);
+      border-radius: 12px;
+      padding: 10px 14px;
+      background: rgba(0,229,255,.08);
+    }
 
-            const newProduct = {
-                title: document.getElementById('pTitle').value,
-                price: document.getElementById('pPrice').value,
-                cat: document.getElementById('pCat').value,
-                img: document.getElementById('pImg').value,
-                link: document.getElementById('pLink').value
-            };
+    .hero,
+    .products-section,
+    footer {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
 
-            currentProducts.push(newProduct);
+    .hero {
+      padding: 70px 0 35px;
+      text-align: center;
+    }
 
-            try {
-                await updateDatabase();
-                document.getElementById('addProductForm').reset();
-                toggleAdminPanel();
-                renderProducts();
-                alert('محصول با موفقیت در دیتابیس ابری ثبت شد!');
-            } catch (err) {
-                console.error(err);
-                alert('خطا در ذخیره‌سازی محصول!');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up me-1"></i> ثبت و انتشار آنلاین';
-            }
-        }
+    .hero h1 {
+      color: var(--primary);
+      font-size: clamp(2rem, 6vw, 4.3rem);
+      text-shadow: 0 0 22px rgba(0,229,255,.65);
+    }
 
-        // حذف محصول
-        async function deleteProduct(index) {
-            if (confirm('آیا از حذف این محصول اطمینان دارید؟')) {
-                currentProducts.splice(index, 1);
-                renderProducts();
-                await updateDatabase();
-            }
-        }
+    .hero p {
+      max-width: 650px;
+      margin: 20px auto 0;
+      color: var(--muted);
+      line-height: 2;
+    }
 
-        // آپدیت ابری دیتابیس
-        async function updateDatabase() {
-            const res = await fetch(BASE_URL, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Master-Key': MASTER_KEY,
-                    'X-Bin-Versioning': 'false'
-                },
-                body: JSON.stringify({ products: currentProducts })
-            });
+    .search-box {
+      max-width: 600px;
+      margin: 28px auto 0;
+      display: flex;
+      gap: 10px;
+    }
 
-            if (!res.ok) {
-                throw new Error('خطا در ثبت در دیتابیس');
-            }
-        }
+    .search-box input {
+      width: 100%;
+      padding: 14px;
+      color: white;
+      border: 1px solid rgba(0,229,255,.3);
+      border-radius: 12px;
+      outline: none;
+      background: var(--panel);
+      font-family: inherit;
+    }
 
-        // شروع برنامه
-        fetchProducts();
-    </script>
+    .products-section {
+      padding: 45px 0 75px;
+    }
+
+    .section-title {
+      margin-bottom: 22px;
+      color: var(--primary);
+      font-size: 1.7rem;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .product {
+      overflow: hidden;
+      border: 1px solid rgba(120, 150, 220, .25);
+      border-radius: 20px;
+      background: rgba(18, 24, 39, .88);
+      transition: .25s;
+    }
+
+    .product:hover {
+      transform: translateY(-6px);
+      border-color: var(--secondary);
+      box-shadow: 0 0 25px rgba(255,60,172,.2);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 210px;
+      display: grid;
+      place-items: center;
+      color: var(--primary);
+      font-size: 4rem;
+      background:
+        linear-gradient(135deg, rgba(0,229,255,.13), rgba(255,60,172,.13)),
+        var(--panel2);
+    }
+
+    .product-content {
+      padding: 19px;
+    }
+
+    .product h3 {
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .product-description {
+      min-height: 52px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: .9rem;
+    }
+
+    .product-bottom {
+      margin-top: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .price {
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    .buy {
+      padding: 10px 13px;
+      color: #061015;
+      border: 0;
+      border-radius: 10px;
+      background: var(--primary);
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: bold;
+    }
+
+    .buy:hover {
+      box-shadow: 0 0 18px rgba(0,229,255,.65);
+    }
+
+    .empty {
+      display: none;
+      padding: 35px;
+      color: var(--muted);
+      text-align: center;
+      border: 1px dashed rgba(255,255,255,.2);
+      border-radius: 16px;
+    }
+
+    footer {
+      padding: 25px 0;
+      color: var(--muted);
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+
+    @media (max-width: 800px) {
+      .products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 540px) {
+      .nav {
+        min-height: 65px;
+      }
+
+      .products {
+        grid-template-columns: 1fr;
+      }
+
+      .search-box {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav">
+      <a class="logo" href="#">فروشگاه من</a>
+      <div class="cart">🛒 سبد: <span id="cartCount">0</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>فروشگاه من</h1>
+      <p>
+        محصولات باکیفیت را ببین و برای سفارش، روی دکمه خرید بزن.
+      </p>
+
+      <div class="search-box">
+        <input id="searchInput" type="search" placeholder="جست‌وجوی محصول...">
+      </div>
+    </section>
+
+    <section class="products-section">
+      <h2 class="section-title">محصولات</h2>
+
+      <div id="products" class="products"></div>
+
+      <div id="empty" class="empty">
+        محصولی با این نام پیدا نشد.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 فروشگاه من — تمامی حقوق محفوظ است
+  </footer>
+
+  <script src="products.js"></script>
+
+  <script>
+    const productsBox = document.getElementById("products");
+    const emptyBox = document.getElementById("empty");
+    const searchInput = document.getElementById("searchInput");
+    const cartCount = document.getElementById("cartCount");
+
+    let cart = 0;
+
+    function showProducts(list) {
+      productsBox.innerHTML = "";
+
+      if (list.length === 0) {
+        emptyBox.style.display = "block";
+        return;
+      }
+
+      emptyBox.style.display = "none";
+
+      list.forEach(product => {
+        const card = document.createElement("article");
+        card.className = "product";
+
+        card.innerHTML = `
+          <div class="product-image">${product.icon}</div>
+          <div class="product-content">
+            <h3>${product.name}</h3>
+            <p class="product-description">${product.description}</p>
+
+            <div class="product-bottom">
+              <span class="price">${product.price}</span>
+              <button class="buy" onclick="orderProduct('${product.name}')">
+                سفارش
+              </button>
+            </div>
+          </div>
+        `;
+
+        productsBox.appendChild(card);
+      });
+    }
+
+    function orderProduct(productName) {
+      cart++;
+      cartCount.textContent = cart;
+
+      const phone = "989000000000";
+      const message = `سلام، برای سفارش محصول «${productName}» پیام می‌دهم.`;
+
+      window.open(
+        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+        "_blank"
+      );
+    }
+
+    searchInput.addEventListener("input", () => {
+      const text = searchInput.value.trim().toLowerCase();
+
+      const filtered = products.filter(product =>
+        `${product.name} ${product.description}`.toLowerCase().includes(text)
+      );
+
+      showProducts(filtered);
+    });
+
+    showProducts(products);
+  </script>
+</body>
+</html>
