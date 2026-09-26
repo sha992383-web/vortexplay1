@@ -61,7 +61,6 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(0, 198, 255, 0.6);
     }
-    /* استایل پنل مدیریت */
     .modal {
       display: none;
       position: fixed;
@@ -96,7 +95,6 @@
       background: #1b263b;
       color: #fff;
       outline: none;
-      transition: border 0.3s;
     }
     input:focus {
       border-color: #00c6ff;
@@ -116,37 +114,52 @@
       background: #e63946;
       margin-top: 8px;
     }
+    label {
+      font-size: 13px;
+      color: #8892b0;
+      margin-top: 10px;
+      display: block;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
     <h1>به وب‌سایت من خوش آمدید</h1>
-    <p>این یک سایت میزبانی شده روی GitHub Pages با تم آبی زیبا است.</p>
+    <p>این یک سایت میزبانی شده روی Cloudflare Pages است.</p>
     <button class="admin-btn" onclick="openAdmin()">ورود به پنل مدیریت</button>
   </div>
 
-  <!-- پنل مدیریت -->
   <div class="modal" id="adminModal">
     <div class="modal-content">
-      <h3>پنل تغییر پس‌زمینه</h3>
-      <input type="password" id="tokenInput" placeholder="رمز عبور را وارد کنید">
-      <input type="text" id="bgUrlInput" placeholder="لینک مستقیم عکس (https://...)">
-      <button class="save-btn" onclick="saveBackground()">ذخیره پس‌زمینه</button>
+      <h3>تغییر پس‌زمینه همگانی</h3>
+      
+      <input type="password" id="tokenInput" placeholder="رمز عبور را وارد کنید (1234)">
+      
+      <label>انتخاب عکس از گالری:</label>
+      <input type="file" id="fileInput" accept="image/*">
+
+      <button class="save-btn" onclick="uploadAndSave()">ذخیره پس‌زمینه برای همه</button>
       <button class="save-btn close-btn" onclick="closeAdmin()">بستن</button>
+      
+      <p id="status" style="font-size:12px; margin-top:10px; text-align:center; color:#00c6ff;"></p>
     </div>
   </div>
 
   <script>
-    // رمز عبور برای ورود به پنل
-    const SECRET_TOKEN = "1234";
+    const ADMIN_PASS = "1234";
 
-    window.onload = function() {
-      const savedBg = localStorage.getItem('custom_bg');
-      if (savedBg) {
-        document.body.style.backgroundImage = `url('${savedBg}')`;
+    async function loadBackground() {
+      try {
+        const res = await fetch('/api/get-bg');
+        const data = await res.json();
+        if (data.bgData) {
+          document.body.style.backgroundImage = `url('${data.bgData}')`;
+        }
+      } catch (e) {
+        console.log("خطا در بارگذاری پس‌زمینه");
       }
-    };
+    }
 
     function openAdmin() {
       document.getElementById('adminModal').style.display = 'flex';
@@ -154,28 +167,61 @@
 
     function closeAdmin() {
       document.getElementById('adminModal').style.display = 'none';
+      document.getElementById('status').innerText = "";
     }
 
-    function saveBackground() {
-      const token = document.getElementById('tokenInput').value;
-      const bgUrl = document.getElementById('bgUrlInput').value;
+    function uploadAndSave() {
+      const pass = document.getElementById('tokenInput').value;
+      const fileInput = document.getElementById('fileInput');
+      const status = document.getElementById('status');
 
-      if (token !== SECRET_TOKEN) {
+      if (pass !== ADMIN_PASS) {
         alert("رمز عبور اشتباه است!");
         return;
       }
 
-      if (!bgUrl) {
-        alert("لطفاً لینک عکس را وارد کنید.");
+      if (!fileInput.files || !fileInput.files[0]) {
+        alert("لطفاً یک عکس از گالری انتخاب کنید.");
         return;
       }
 
-      localStorage.setItem('custom_bg', bgUrl);
-      document.body.style.backgroundImage = `url('${bgUrl}')`;
-      alert("پس‌زمینه با موفقیت تغییر کرد!");
-      closeAdmin();
+      const file = fileInput.files[0];
+      status.innerText = "در حال پردازش و آپلود عکس...";
+
+      const reader = new FileReader();
+      reader.onload = async function(e) {
+        const base64Image = e.target.result;
+
+        const res = await fetch('/api/set-bg', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pass, bgData: base64Image })
+        });
+
+        if (res.ok) {
+          status.innerText = "پس‌زمینه با موفقیت برای همه تغییر کرد!";
+          document.body.style.backgroundImage = `url('${base64Image}')`;
+          setTimeout(closeAdmin, 1500);
+        } else {
+          status.innerText = "خطا در ذخیره‌سازی عکس در دیتابیس.";
+        }
+      };
+      reader.readAsDataURL(file);
     }
+
+    loadBackground();
   </script>
+export async function onRequestPost(context) {
+  const { pass, bgData } = await context.request.json();
+
+  if (pass !== "1234") {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  await context.env.SITE_SETTINGS.put("bgData", bgData);
+  return new Response("OK", { status: 200 });
+}
 
 </body>
 </html>
+
