@@ -11,81 +11,110 @@
       padding: 0;
     }
     body {
-      font-family: Tahoma, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       background-size: cover;
       background-position: center;
       transition: background-image 0.5s ease-in-out;
       color: #fff;
     }
     .container {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 15px;
+      background: rgba(15, 32, 39, 0.75);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 198, 255, 0.3);
+      padding: 35px;
+      border-radius: 20px;
       text-align: center;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-      max-width: 400px;
+      box-shadow: 0 8px 32px 0 rgba(0, 198, 255, 0.2);
+      max-width: 420px;
       width: 90%;
     }
     h1 {
       margin-bottom: 15px;
-      font-size: 24px;
+      font-size: 26px;
+      color: #00c6ff;
+      text-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
     }
     p {
-      margin-bottom: 20px;
-      color: #ddd;
+      margin-bottom: 25px;
+      color: #e0e6ed;
+      line-height: 1.6;
     }
     .admin-btn {
-      background: #007bff;
+      background: linear-gradient(45deg, #0072ff, #00c6ff);
       color: white;
       border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
+      padding: 12px 24px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 15px;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+    .admin-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 198, 255, 0.6);
     }
     /* استایل پنل مدیریت */
     .modal {
       display: none;
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
+      background: rgba(10, 25, 47, 0.85);
+      backdrop-filter: blur(5px);
       justify-content: center;
       align-items: center;
+      z-index: 1000;
     }
     .modal-content {
-      background: #222;
-      padding: 25px;
-      border-radius: 10px;
+      background: #0d1b2a;
+      border: 1px solid #00c6ff;
+      padding: 30px;
+      border-radius: 15px;
       width: 90%;
-      max-width: 350px;
+      max-width: 380px;
       text-align: right;
+      box-shadow: 0 10px 30px rgba(0, 198, 255, 0.3);
+    }
+    .modal-content h3 {
+      color: #00c6ff;
+      margin-bottom: 15px;
+      text-align: center;
     }
     input {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #444;
-      background: #333;
-      color: white;
+      border-radius: 8px;
+      border: 1px solid #1b263b;
+      background: #1b263b;
+      color: #fff;
+      outline: none;
+      transition: border 0.3s;
+    }
+    input:focus {
+      border-color: #00c6ff;
     }
     .save-btn {
       width: 100%;
-      background: #28a745;
+      background: linear-gradient(45deg, #0072ff, #00c6ff);
       color: white;
       border: none;
-      padding: 10px;
-      border-radius: 5px;
+      padding: 12px;
+      border-radius: 8px;
       cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
     }
     .close-btn {
-      background: #dc3545;
-      margin-top: 5px;
+      background: #e63946;
+      margin-top: 8px;
     }
   </style>
 </head>
@@ -93,15 +122,15 @@
 
   <div class="container">
     <h1>به وب‌سایت من خوش آمدید</h1>
-    <p>این یک سایت میزبانی شده روی GitHub Pages است.</p>
+    <p>این یک سایت میزبانی شده روی GitHub Pages با تم آبی زیبا است.</p>
     <button class="admin-btn" onclick="openAdmin()">ورود به پنل مدیریت</button>
   </div>
 
-  <!-- پنل مدیریت (مدال مخفی) -->
+  <!-- پنل مدیریت -->
   <div class="modal" id="adminModal">
     <div class="modal-content">
       <h3>پنل تغییر پس‌زمینه</h3>
-      <input type="password" id="tokenInput" placeholder="رمز ۳۲ رقمی را وارد کنید">
+      <input type="password" id="tokenInput" placeholder="رمز عبور را وارد کنید">
       <input type="text" id="bgUrlInput" placeholder="لینک مستقیم عکس (https://...)">
       <button class="save-btn" onclick="saveBackground()">ذخیره پس‌زمینه</button>
       <button class="save-btn close-btn" onclick="closeAdmin()">بستن</button>
@@ -109,17 +138,13 @@
   </div>
 
   <script>
-    // رمز ۳۲ رقمی اختصاصی شما برای ورود به پنل
-    const SECRET_TOKEN = "12345678901234567890123456789012";
+    // رمز عبور برای ورود به پنل
+    const SECRET_TOKEN = "1234";
 
-    // بارگذاری پس‌زمینه ذخیره‌شده
     window.onload = function() {
       const savedBg = localStorage.getItem('custom_bg');
       if (savedBg) {
         document.body.style.backgroundImage = `url('${savedBg}')`;
-      } else {
-        // پس‌زمینه پیش‌فرض
-        document.body.style.backgroundImage = "url('https://picsum.photos/1920/1080')";
       }
     };
 
@@ -136,7 +161,7 @@
       const bgUrl = document.getElementById('bgUrlInput').value;
 
       if (token !== SECRET_TOKEN) {
-        alert("رمز ۳۲ رقمی اشتباه است!");
+        alert("رمز عبور اشتباه است!");
         return;
       }
 
@@ -145,7 +170,6 @@
         return;
       }
 
-      // ذخیره لینک در حافظه مرورگر
       localStorage.setItem('custom_bg', bgUrl);
       document.body.style.backgroundImage = `url('${bgUrl}')`;
       alert("پس‌زمینه با موفقیت تغییر کرد!");
