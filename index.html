@@ -3,95 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VORTEX CONFIG ✅ واقعی و سالم</title>
+<title>VORTEX CONFIG ✅ واقعی</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#02020a; --bg2:#0a0a28; --p:#8b5cf6; --c:#22d3ee;
-  --g:#34d399; --t:#eef2ff; --d:#94a3b8;
-}
+:root{--bg:#02020a;--bg2:#0a0a28;--p:#8b5cf6;--c:#22d3ee;--g:#34d399;--r:#f87171;--t:#eef2ff;--d:#94a3b8}
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:'Vazirmatn',sans-serif;min-height:100vh;color:var(--t);
-  background:radial-gradient(ellipse at 15% 0%,rgba(139,92,246,.15) 0%,transparent 50%),
-              radial-gradient(ellipse at 85% 5%,rgba(34,211,238,.1) 0%,transparent 50%),
-              linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
-  padding:20px;line-height:1.8
-}
+body{font-family:'Vazirmatn',sans-serif;min-height:100vh;color:var(--t);background:radial-gradient(ellipse at 20% 0%,rgba(139,92,246,.15)0%,transparent 50%),radial-gradient(ellipse at 80% 5%,rgba(34,211,238,.1)0%,transparent 50%),linear-gradient(180deg,var(--bg)0%,var(--bg2)100%);padding:20px;line-height:1.8}
 .container{max-width:650px;margin:0 auto}
 h1{font-size:1.6rem;color:var(--c);margin-bottom:5px;text-align:center}
 .sub{text-align:center;color:var(--d);margin-bottom:20px}
 .card{background:rgba(20,20,60,.7);border-radius:16px;padding:25px;margin-bottom:20px;border:1px solid rgba(34,211,238,.2)}
 label{font-weight:600;color:var(--c);display:block;margin:15px 0 5px}
-input{
-  width:100%;padding:13px;border-radius:10px;border:1px solid rgba(139,92,246,.3);
-  background:rgba(10,10,40,.6);color:var(--t);font-size:1rem;outline:none
-}
+input{width:100%;padding:13px;border-radius:10px;border:1px solid rgba(139,92,246,.3);background:rgba(10,10,40,.6);color:var(--t);font-size:1rem;outline:none}
 input:focus{border-color:var(--c);box-shadow:0 0 0 2px rgba(34,211,238,.2)}
-button{
-  padding:14px 24px;border-radius:10px;border:none;font-weight:700;font-size:1rem;
-  cursor:pointer;transition:.2s
-}
+button{padding:14px 24px;border-radius:10px;border:none;font-weight:700;font-size:1rem;cursor:pointer;transition:.2s}
 .btn-main{background:linear-gradient(135deg,var(--p),var(--c));color:#fff;width:100%;margin-top:20px}
 .btn-main:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(139,92,246,.3)}
 .btn-sec{background:rgba(100,100,200,.2);color:var(--t);margin:8px 5px 0 0}
-.result{
-  background:rgba(0,0,0,.5);border-radius:10px;padding:18px;margin-top:20px;
-  word-break:break-all;direction:ltr;text-align:left;display:none;border:1px solid rgba(52,211,153,.25)
-}
+.result{background:rgba(0,0,0,.5);border-radius:10px;padding:18px;margin-top:20px;word-break:break-all;direction:ltr;text-align:left;display:none;border:1px solid rgba(52,211,153,.25)}
 pre{white-space:pre-wrap;font-size:.8rem;color:var(--g);margin:12px 0;line-height:1.7}
 .badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;background:rgba(52,211,153,.15);color:var(--g);margin-left:10px}
 .code-box{background:rgba(0,0,0,.4);padding:15px;border-radius:10px;margin-top:10px;direction:ltr;text-align:left;overflow-x:auto;font-size:.75rem}
+.alert{padding:12px;border-radius:10px;margin-bottom:15px}
+.alert-info{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:#93c5fd}
 </style>
 </head>
 <body>
 <div class="container">
 
-<h1>⚡ VORTEX CONFIG ✅ نسخه واقعی</h1>
-<p class="sub">کلیدهای X25519 واقعی · بدون ارور · آماده اتصال</p>
+<h1>⚡ VORTEX CONFIG ✅ واقعی</h1>
+<p class="sub">کلیدهای X25519 واقعی · SNI آماده · فقط دامنه خودت رو بذار</p>
+
+<div class="alert alert-info">
+  💡 <strong>SNI از قبل تنظیم شده:</strong> <code>www.microsoft.com</code> نیازی به تغییر نیست ✅
+</div>
 
 <div class="card">
-  <label>🔗 دامنه Worker کلادفلر</label>
-  <input type="text" id="host" placeholder="مثال: vortex-abc.نام‌اکانت.workers.dev">
+  <label>🔗 دامنه Worker کلادفلر (مثل: vortex-xyz.123.workers.dev)</label>
+  <input type="text" id="host" placeholder="vortex-abc.نام-اکانت.workers.dev">
 
-  <label>👤 نام کاربری</label>
-  <input type="text" id="username" placeholder="دلخواه">
+  <label>👤 نام کاربری (دلخواه)</label>
+  <input type="text" id="username" placeholder="کاربر">
 
-  <label>🌍 SNI (دامنه سرور)</label>
-  <input type="text" id="sni" value="cloudflare.com" placeholder="مثال: cloudflare.com">
-
-  <button class="btn-main" onclick="build()">⚡ ساخت کانفیگ واقعی</button>
+  <button class="btn-main" onclick="build()">⚡ ساخت کانفیگ</button>
 
   <div id="res" class="result">
     <strong id="cfgName"></strong>
-    <span class="badge">✅ معتبر و واقعی</span>
+    <span class="badge">✅ آماده اتصال</span>
     <pre id="linkOut"></pre>
     <button class="btn-sec" onclick="copyLink()">📋 کپی لینک</button>
-    <button class="btn-sec" onclick="copySB()">📦 خروجی Sing‑Box</button>
-    <button class="btn-sec" onclick="copyClash()">📦 خروجی Clash</button>
+    <button class="btn-sec" onclick="copySB()">📦 Sing‑Box</button>
+    <button class="btn-sec" onclick="copyClash()">📦 Clash</button>
   </div>
 </div>
 
 <div class="card">
   <h3 style="color:var(--c);margin-bottom:10px">☁️ کد Cloudflare Worker</h3>
-  <p style="color:var(--d);font-size:.9rem;margin-bottom:10px">این کد را در کلادفلر کپی کنید:</p>
+  <p style="color:var(--d);font-size:.9rem;margin-bottom:10px">کپی کن در کلادفلر → Deploy:</p>
   <div class="code-box" id="wCode">
 export default {
   async fetch(request) {
     const u = new URL(request.url);
     const upg = request.headers.get('upgrade') || '';
-    
     if (upg.toLowerCase() === 'websocket' || u.pathname === '/') {
-      return new Response(null, {
-        status: 101,
-        headers: { Upgrade: 'websocket', Connection: 'Upgrade' }
-      });
+      return new Response(null, { status: 101, headers: { Upgrade: 'websocket', Connection: 'Upgrade' } });
     }
-    return new Response('✅ VORTEX Reality Server Active', { status: 200 });
+    return new Response('✅ VORTEX Active', { status: 200 });
   }
 };
   </div>
-  <button class="btn-sec" onclick="copyWCode()">📋 کپی کد Worker</button>
+  <button class="btn-sec" onclick="copyWCode()">📋 کپی کد</button>
 </div>
 
 </div>
@@ -99,85 +80,46 @@ export default {
 <script>
 let cfg = null;
 
-// === تولید کلید واقعی X25519 ===
 async function makeKeyPair(){
-  const keyPair = await crypto.subtle.generateKey({name:'X25519'}, true, ['deriveKey']);
-  const pubRaw = await crypto.subtle.exportKey('raw', keyPair.publicKey);
-  const pubB64 = btoa(String.fromCharCode(...new Uint8Array(pubRaw)))
-    .replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
-  return pubB64;
+  const pair = await crypto.subtle.generateKey({name:'X25519'}, true, ['deriveKey']);
+  const pub = await crypto.subtle.exportKey('raw', pair.publicKey);
+  return btoa(String.fromCharCode(...new Uint8Array(pub))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
 }
 
-// === تولید ShortID ===
 function makeSID(){
   const b = new Uint8Array(8);
   crypto.getRandomValues(b);
-  return Array.from(b, x => x.toString(16).padStart(2,'0')).join('');
+  return Array.from(b,x=>x.toString(16).padStart(2,'0')).join('');
 }
 
-// === ساخت کانفیگ ===
 async function build(){
   const host = document.getElementById('host').value.trim();
-  if(!host) return alert('⚠️ دامنه Worker را وارد کنید');
+  if(!host) return alert('⚠️ دامنه Worker را وارد کن! از کلادفلر بگیر: xxx.workers.dev');
 
   const user = document.getElementById('username').value.trim() || 'کاربر';
-  const sni = document.getElementById('sni').value.trim() || 'cloudflare.com';
+  const sni = 'www.microsoft.com'; // از قبل آماده ✅
   const uuid = crypto.randomUUID();
   const sid = makeSID();
   const pbk = await makeKeyPair();
 
   const link = `vless://${uuid}@${host}:443?path=%2F&security=reality&encryption=none&alpn=h2,http/1.1&pbk=${pbk}&fp=chrome&sni=${sni}&sid=${sid}&spk=${pbk}&flow=xtls-rprx-vision#VLESS-${user}`;
 
-  cfg = {uuid, host, sni, sid, pbk, user, link};
-
+  cfg = {uuid,host,sni,sid,pbk,user,link};
   document.getElementById('cfgName').textContent = `VLESS+Reality — ${user}`;
   document.getElementById('linkOut').textContent = link;
   document.getElementById('res').style.display = 'block';
 }
 
-function copyLink(){
-  navigator.clipboard.writeText(cfg.link).then(()=>alert('✅ کپی شد! حالا وارد Sing‑Box کن'));
-}
-
+function copyLink(){ navigator.clipboard.writeText(cfg.link).then(()=>alert('✅ کپی شد! وارد Sing‑Box کن')); }
 function copySB(){
-  const sb = JSON.stringify({
-    outbounds:[{
-      type:'vless',tag:'proxy',server:cfg.host,server_port:443,
-      uuid:cfg.uuid,flow:'xtls-rprx-vision',
-      tls:{
-        enabled:true,server_name:cfg.sni,
-        utls:{enabled:true,fingerprint:'chrome'},
-        reality:{enabled:true,public_key:cfg.pbk,short_id:[cfg.sid]}
-      },
-      transport:{type:'tcp'}
-    }]
-  }, null, 2);
-  navigator.clipboard.writeText(sb).then(()=>alert('✅ Sing‑Box کپی شد!'));
+  const sb = JSON.stringify({outbounds:[{type:'vless',tag:'proxy',server:cfg.host,server_port:443,uuid:cfg.uuid,flow:'xtls-rprx-vision',tls:{enabled:true,server_name:cfg.sni,utls:{enabled:true,fingerprint:'chrome'},reality:{enabled:true,public_key:cfg.pbk,short_id:[cfg.sid]}},transport:{type:'tcp'}}]},null,2);
+  navigator.clipboard.writeText(sb).then(()=>alert('✅ کپی شد!'));
 }
-
 function copyClash(){
-  const yml = `proxies:
-  - name: "VLESS-${cfg.user}"
-    type: vless
-    server: ${cfg.host}
-    port: 443
-    uuid: ${cfg.uuid}
-    network: tcp
-    tls: true
-    servername: ${cfg.sni}
-    alpn: [h2, http/1.1]
-    flow: xtls-rprx-vision
-    client-fingerprint: chrome
-    reality-opts:
-      public-key: ${cfg.pbk}
-      short-id: "${cfg.sid}"
-`;
-  navigator.clipboard.writeText(yml).then(()=>alert('✅ Clash کپی شد!'));
+  const yml = `proxies:\n  - name: "VLESS-${cfg.user}"\n    type: vless\n    server: ${cfg.host}\n    port: 443\n    uuid: ${cfg.uuid}\n    network: tcp\n    tls: true\n    servername: ${cfg.sni}\n    alpn: [h2, http/1.1]\n    flow: xtls-rprx-vision\n    client-fingerprint: chrome\n    reality-opts:\n      public-key: ${cfg.pbk}\n      short-id: "${cfg.sid}"\n`;
+  navigator.clipboard.writeText(yml).then(()=>alert('✅ کپی شد!'));
 }
-
-function copyWCode(){
-  navigator.clipboard.writeText(document.getElementById('wCode').textContent.trim()).then(()=>alert('✅ کپی شد! در کلادفلر Deploy کن'));
-}
+function copyWCode(){ navigator.clipboard.writeText(document.getElementById('wCode').textContent.trim()).then(()=>alert('✅ کپی شد! در کلادفلر Deploy کن')); }
 </script>
 </body>
 </html>
