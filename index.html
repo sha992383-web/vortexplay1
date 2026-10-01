@@ -6,153 +6,378 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>VORTEX PLAY | PS5 Jailbreak</title>
+<title>VORTEX PLAY | PS4 & PS5 Jailbreak Host</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Rajdhani',sans-serif}
-body{
-    background:radial-gradient(circle at 20% 0%,rgba(0,160,255,.12) 0%,transparent 50%),
-                radial-gradient(circle at 80% 30%,rgba(0,60,200,.15) 0%,transparent 50%),
-                linear-gradient(180deg,#020510 0%,#050a20 50%,#030818 100%);
-    min-height:100vh;color:#90b8e0;line-height:1.8;padding:20px 15px
+:root {
+    --blue-deep: #000c24;
+    --blue-mid: #001a4d;
+    --blue-light: #003380;
+    --neon-blue: #00a0ff;
+    --neon-cyan: #00e0ff;
+    --neon-sky: #60efff;
+    --neon-purple: #8060ff;
+    --neon-gold: #ffd000;
+    --text-white: #ffffff;
+    --text-bright: #c0e7ff;
+    --text-soft: #80b8e0;
+    --text-dim: #4070a0;
+    --success: #00ffb0;
+    --danger: #ff4070;
+    --ps4-color: #0099ff;
+    --ps5-color: #8060ff;
 }
-.container{max-width:920px;margin:0 auto}
-header{
-    text-align:center;padding:45px 20px 35px;
-    border-bottom:1px solid rgba(0,160,255,.15);margin-bottom:30px
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+body {
+    background: 
+        radial-gradient(circle at 15% 0%, rgba(0, 160, 255, 0.18) 0%, transparent 50%),
+        radial-gradient(circle at 85% 10%, rgba(100, 80, 255, 0.15) 0%, transparent 55%),
+        radial-gradient(circle at 50% 80%, rgba(0, 60, 150, 0.15) 0%, transparent 50%),
+        linear-gradient(180deg, #000c24 0%, #001233 40%, #000f2b 100%);
+    min-height: 100vh; color: var(--text-soft); line-height: 1.8; padding: 20px 15px;
+    overflow-x: hidden;
 }
-.logo{
-    font-size:3rem;font-weight:800;letter-spacing:4px;
-    background:linear-gradient(135deg,#40e0ff,#00a0ff,#00e0ff);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-    animation:logoGlow 3s ease-in-out infinite alternate
+body::before {
+    content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(rgba(0, 160, 255, 0.08) 1px, transparent 1px);
+    background-size: 60px 60px; pointer-events: none; opacity: 0.4;
+    animation: gridMove 20s linear infinite;
 }
-@keyframes logoGlow{
-    from{filter:drop-shadow(0 0 15px rgba(0,160,255,.4))}
-    to{filter:drop-shadow(0 0 30px rgba(0,220,255,.6))}
+@keyframes gridMove {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(60px); }
 }
-.subtitle{color:#d0e8ff;margin-top:10px;font-size:1.15rem}
-.status-bar{
-    display:inline-flex;align-items:center;gap:10px;margin-top:20px;
-    background:rgba(0,160,255,.08);padding:10px 25px;border-radius:40px;
-    border:1px solid rgba(0,160,255,.25)
+.container { max-width: 920px; margin: 0 auto; position: relative; z-index: 1; }
+
+/* ===== HEADER ===== */
+header {
+    text-align: center; padding: 50px 20px 40px; position: relative;
 }
-.status-dot{
-    width:12px;height:12px;background:#00ff90;border-radius:50%;
-    box-shadow:0 0 10px #00ff90;animation:pulse 2s infinite
+.logo-wrap { position: relative; display: inline-block; }
+.logo-glow {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 120%; height: 160%;
+    background: radial-gradient(circle, rgba(0, 160, 255, 0.35) 0%, transparent 70%);
+    filter: blur(25px); animation: logoPulse 3s ease-in-out infinite alternate;
 }
-@keyframes pulse{
-    0%,100%{opacity:1;transform:scale(1)}
-    50%{opacity:.5;transform:scale(.85)}
+@keyframes logoPulse {
+    from { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
 }
-.card{
-    background:linear-gradient(135deg,rgba(10,20,60,.9),rgba(5,15,50,.95));
-    border-radius:20px;padding:28px;margin-bottom:22px;
-    border:1px solid rgba(0,160,255,.35);transition:all .3s ease
+.logo {
+    font-size: 3.2rem; font-weight: 800; letter-spacing: 5px;
+    background: linear-gradient(135deg, #90e7ff, #00a0ff, #8060ff, #00e0ff);
+    background-size: 300% 300%;
+    animation: gradientShift 4s ease infinite;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    position: relative; z-index: 1;
 }
-.card:hover{border-color:rgba(0,200,255,.5);transform:translateY(-2px)}
-.card h2{color:#40e0ff;font-size:1.35rem;margin-bottom:18px}
-.dns-box{
-    background:rgba(0,80,160,.15);border-radius:12px;padding:18px 22px;
-    font-family:'Courier New',monospace;font-size:1.1rem;margin:15px 0;
-    border-right:3px solid #00e0ff;direction:ltr;text-align:left
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
-.dns-value{color:#40e0ff;font-weight:700;font-size:1.2rem}
-.btn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:10px}
-.btn{
-    background:linear-gradient(135deg,rgba(0,80,160,.25),rgba(0,60,120,.15));
-    border:1px solid rgba(0,160,255,.3);border-radius:12px;
-    padding:16px 20px;color:#d0e8ff;font-size:1rem;font-weight:600;
-    cursor:pointer;transition:all .25s ease;text-align:center;text-decoration:none;display:inline-block
+.subtitle {
+    color: var(--text-bright); margin-top: 12px; font-size: 1.2rem; font-weight: 500;
+    text-shadow: 0 0 20px rgba(0, 160, 255, 0.3);
 }
-.btn:hover{border-color:#00e0ff;background:rgba(0,160,255,.2);transform:translateY(-2px)}
-.btn.primary{
-    background:linear-gradient(135deg,#00a0ff,#0060c0);border:none;color:white;
-    box-shadow:0 4px 15px rgba(0,160,255,.35)
+.tagline {
+    color: var(--text-dim); margin-top: 6px; font-size: 0.95rem; letter-spacing: 1px;
 }
-.payload-item{
-    padding:12px 15px;background:rgba(0,100,200,.1);border-radius:6px;
-    margin-bottom:8px;border-right:3px solid #00a0ff
+.status-bar {
+    display: inline-flex; align-items: center; gap: 12px; margin-top: 25px;
+    background: linear-gradient(90deg, rgba(0, 160, 255, 0.12), rgba(120, 100, 255, 0.08));
+    padding: 12px 30px; border-radius: 50px;
+    border: 1px solid rgba(0, 160, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 160, 255, 0.15), inset 0 0 15px rgba(0, 160, 255, 0.05);
+    backdrop-filter: blur(10px);
 }
-.warning-box{
-    background:rgba(255,64,96,.08);border:1px solid rgba(255,64,96,.25);
-    border-radius:12px;padding:18px 22px;margin-top:20px;color:#ffb0c0
+.status-dot {
+    width: 14px; height: 14px; background: var(--success); border-radius: 50%;
+    box-shadow: 0 0 8px var(--success), 0 0 16px var(--success);
+    animation: statusPulse 2s infinite;
 }
-.info-box{
-    background:rgba(0,160,255,.08);border:1px solid rgba(0,160,255,.25);
-    border-radius:12px;padding:18px 22px;margin-top:15px;color:#b0d8ff
+@keyframes statusPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
 }
-footer{
-    text-align:center;margin-top:50px;padding:25px 20px;
-    color:#5078a0;font-size:.9rem;
-    border-top:1px solid rgba(0,160,255,.1)
+
+/* ===== TABS ===== */
+.tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+.tab {
+    flex: 1; padding: 14px; border: 1px solid rgba(0, 160, 255, 0.2);
+    background: rgba(0, 80, 160, 0.1); color: var(--text-soft);
+    border-radius: 12px 12px 0 0; cursor: pointer; text-align: center;
+    font-weight: 600; transition: all 0.3s;
 }
-footer a{color:#40e0ff;text-decoration:none}
-@media(max-width:600px){.logo{font-size:2rem}.btn-grid{grid-template-columns:1fr}}
+.tab.active {
+    border-bottom: none; background: rgba(0, 160, 255, 0.2);
+    color: white; border-color: var(--neon-blue);
+}
+.tab.ps4-tab.active { border-color: var(--ps4-color); background: rgba(0, 150, 255, 0.2); }
+.tab.ps5-tab.active { border-color: var(--ps5-color); background: rgba(120, 90, 255, 0.2); }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== CARDS ===== */
+.card {
+    background: linear-gradient(135deg, rgba(0, 40, 100, 0.4), rgba(0, 20, 60, 0.6));
+    border-radius: 24px; padding: 30px; margin-bottom: 24px;
+    border: 1px solid rgba(0, 160, 255, 0.25);
+    box-shadow: 0 8px 32px rgba(0, 80, 160, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    position: relative; overflow: hidden; transition: all 0.35s ease;
+}
+.card.ps4 { border-color: rgba(0, 153, 255, 0.35); }
+.card.ps4::before { background: linear-gradient(90deg, transparent, rgba(0, 153, 255, 0.5), transparent); }
+.card.ps5 { border-color: rgba(128, 96, 255, 0.35); }
+.card.ps5::before { background: linear-gradient(90deg, transparent, rgba(128, 96, 255, 0.5), transparent); }
+.card:hover { transform: translateY(-4px); }
+.card h2 {
+    font-size: 1.4rem; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-weight: 700;
+}
+.card.ps4 h2 { color: var(--ps4-color); text-shadow: 0 0 15px rgba(0, 153, 255, 0.3); }
+.card.ps5 h2 { color: var(--ps5-color); text-shadow: 0 0 15px rgba(128, 96, 255, 0.3); }
+
+/* ===== DNS BOX ===== */
+.dns-box {
+    background: linear-gradient(135deg, rgba(0, 80, 160, 0.3), rgba(0, 40, 100, 0.4));
+    border-radius: 16px; padding: 22px 26px;
+    font-family: 'Courier New', monospace; font-size: 1.15rem; margin: 18px 0;
+    border-right: 4px solid var(--neon-cyan);
+    box-shadow: inset 0 0 20px rgba(0, 160, 255, 0.1);
+    direction: ltr; text-align: left;
+}
+.dns-value { color: var(--neon-sky); font-weight: 700; font-size: 1.3rem; text-shadow: 0 0 10px rgba(0, 220, 255, 0.4); }
+
+/* ===== BUTTONS ===== */
+.btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 14px; }
+.btn {
+    background: linear-gradient(135deg, rgba(0, 80, 160, 0.35), rgba(0, 50, 120, 0.25));
+    border: 1px solid rgba(0, 160, 255, 0.35); border-radius: 14px;
+    padding: 18px 22px; color: var(--text-bright); font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: all 0.3s ease; text-align: center; text-decoration: none; display: inline-block;
+    position: relative; overflow: hidden;
+}
+.btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 25px rgba(0, 160, 255, 0.25); }
+.btn.primary {
+    background: linear-gradient(135deg, #0090ee, #0070cc); border: none; color: white; font-weight: 700;
+    box-shadow: 0 6px 20px rgba(0, 140, 255, 0.4);
+}
+.btn.ps4-btn.primary { background: linear-gradient(135deg, #0099ff, #0066cc); box-shadow: 0 6px 20px rgba(0, 153, 255, 0.4); }
+.btn.ps5-btn.primary { background: linear-gradient(135deg, #8060ff, #5040cc); box-shadow: 0 6px 20px rgba(128, 96, 255, 0.4); }
+.btn-icon { font-size: 1.4rem; margin-bottom: 6px; display: block; }
+
+/* ===== INFO BOXES ===== */
+.info-box {
+    background: linear-gradient(135deg, rgba(0, 160, 255, 0.1), rgba(0, 100, 200, 0.08));
+    border: 1px solid rgba(0, 160, 255, 0.25); border-radius: 16px;
+    padding: 20px 24px; margin-top: 18px; color: #b0e0ff;
+}
+.warning-box {
+    background: linear-gradient(135deg, rgba(255, 64, 96, 0.12), rgba(180, 40, 60, 0.08));
+    border: 1px solid rgba(255, 64, 96, 0.3); border-radius: 16px;
+    padding: 22px 26px; margin-top: 24px; color: #ffc0d0;
+}
+.fw-badge {
+    display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-left: 8px;
+}
+.fw-ok { background: rgba(0, 255, 176, 0.15); color: #00ffb0; border: 1px solid rgba(0, 255, 176, 0.3); }
+.fw-no { background: rgba(255, 64, 96, 0.15); color: #ff8090; border: 1px solid rgba(255, 64, 96, 0.3); }
+
+/* ===== FOOTER ===== */
+footer {
+    text-align: center; margin-top: 60px; padding: 30px 20px;
+    color: var(--text-dim); font-size: 0.9rem;
+    border-top: 1px solid rgba(0, 160, 255, 0.15);
+}
+footer a { color: var(--neon-sky); text-decoration: none; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .logo { font-size: 2rem; letter-spacing: 2px; }
+    .card { padding: 22px 18px; }
+    .btn-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 <div class="container">
 
 <header>
-    <h1 class="logo">VORTEX PLAY</h1>
-    <p class="subtitle">پلتفرم میزبانی ابزارهای جیلبریک PS5</p>
+    <div class="logo-wrap">
+        <div class="logo-glow"></div>
+        <h1 class="logo">VORTEX PLAY</h1>
+    </div>
+    <p class="subtitle">پلتفرم یکپارچه جیلبریک PS4 & PS5</p>
+    <p class="tagline">✅ بدون فیلترشکن — دسترسی مستقیم از ایران</p>
     <div class="status-bar">
         <span class="status-dot"></span>
-        <span>سیستم فعال و آماده سرویس‌دهی</span>
+        <span>همه میزبان‌ها فعال و در دسترس</span>
     </div>
 </header>
 
+<!-- DNS SECTION -->
 <div class="card">
-    <h2>📡 تنظیمات DNS</h2>
-    <p>در تنظیمات شبکه کنسول، DNS را مطابق زیر تنظیم کنید:</p>
+    <h2>📡 تنظیمات DNS — قطع آپدیت خودکار</h2>
+    <p>قبل از باز کردن هر صفحه‌ای، اینترنت کنسول را با این تنظیمات به‌روز کنید:</p>
     <div class="dns-box">
         DNS اصلی: <span class="dns-value">45.56.67.85</span><br><br>
-        DNS فرعی: <span style="color:#666">— خالی بگذارید —</span>
+        DNS فرعی: <span style="color:#5078a0">— خالی بگذارید —</span>
     </div>
     <div class="info-box">
-        💡 این DNS ارتباط با سرورهای آپدیت سونی را مسدود می‌کند، بدون اینکه دسترسی به اینترنت قطع شود.
+        💡 این DNS ارتباط با سرورهای آپدیت سونی را مسدود می‌کند تا کنسول به نسخه جدید آپدیت نشود، اما دسترسی به سایت‌های میزبان فعال باقی می‌ماند.
     </div>
 </div>
 
-<div class="card">
-    <h2>🚀 اجرای اکسپلویت</h2>
-    <p>راهنمای کاربری (User Guide) کنسول را باز کرده و روی یکی از دکمه‌ها بزنید:</p>
-    <div class="btn-grid" style="margin-top:20px">
-        <a href="https://jordyidk.github.io/slopkit/" target="_blank" class="btn primary">⚡ اجرای اکسپلویت</a>
-        <a href="https://zecoxao.github.io/slopkit2/" target="_blank" class="btn">🔄 میزبان جایگزین ۱</a>
-        <a href="https://ps5jb.pages.dev/" target="_blank" class="btn">🌐 میزبان جایگزین ۲</a>
+<!-- TABS: PS4 / PS5 -->
+<div class="tabs">
+    <div class="tab ps4-tab active" onclick="switchTab('ps4')">🎮 PlayStation 4</div>
+    <div class="tab ps5-tab" onclick="switchTab('ps5')">🎮 PlayStation 5</div>
+</div>
+
+<!-- ========== PS4 SECTION ========== -->
+<div id="ps4-content" class="tab-content active">
+    <div class="card ps4">
+        <h2>⚡ میزبان‌های جیلبریک PS4 — بدون فیلترشکن</h2>
+        <p>راهنمای کاربری اینترنت PS4 را باز کرده و روی یکی از دکمه‌ها بزنید:</p>
+        
+        <div class="btn-grid" style="margin-top: 20px;">
+            <a href="https://salt-12.github.io/main/index.html" target="_blank" class="btn ps4-btn primary">
+                <span class="btn-icon">👑</span> Night King Host — همه نسخه‌ها
+            </a>
+            <a href="https://thewizwikii.github.io/PS4/9.00/" target="_blank" class="btn ps4-btn">
+                <span class="btn-icon">🔧</span> MaNu Host — 9.00
+            </a>
+            <a href="https://gamerhack.github.io/900goldhen_psfree/index.html" target="_blank" class="btn ps4-btn">
+                <span class="btn-icon">💎</span> GamerHack — GoldHEN بدون فلش
+            </a>
+            <a href="https://cthugha.exploit.menu" target="_blank" class="btn ps4-btn">
+                <span class="btn-icon">🌐</span> Cthugha — کلاسیک
+            </a>
+        </div>
     </div>
-    <p style="margin-top:15px;font-size:.9rem;color:#5078a0">
-        ⏳ پس از باز شدن صفحه، منتظر بمانید. ممکن است چند دقیقه طول بکشد یا نیاز به تکرار داشته باشد.
-    </p>
+
+    <div class="card ps4">
+        <h2>📋 سازگاری نسخه‌های PS4</h2>
+        <ul style="list-style:none;line-height:2.2;margin-top:10px">
+            <li>✅ <strong>9.00</strong> — کامل و پایدار <span class="fw-badge fw-ok">توصیه‌شده</span></li>
+            <li>✅ <strong>11.00</strong> — فعال <span class="fw-badge fw-ok">موجود</span></li>
+            <li>✅ <strong>12.00 تا 12.52</strong> — روش‌های جدید <span class="fw-badge fw-ok">موجود</span></li>
+            <li>✅ <strong>13.00 تا 13.52</strong> — PSFree + GoldHEN <span class="fw-badge fw-ok">جدید</span></li>
+            <li>❌ <strong>14.00 و بالاتر</strong> — هنوز منتشر نشده <span class="fw-badge fw-no">پشتیبانی نمی‌شود</span></li>
+        </ul>
+    </div>
+
+    <div class="card ps4">
+        <h2>📦 مراحل پس از جیلبریک</h2>
+        <div style="line-height:2.2;margin-top:10px">
+            <div style="padding:10px 0;border-bottom:1px solid rgba(0,153,255,.15)">
+                <strong>۱</strong> — صفحه میزبان را باز کنید → منتظر اجرای خودکار اکسپلویت بمانید
+            </div>
+            <div style="padding:10px 0;border-bottom:1px solid rgba(0,153,255,.15)">
+                <strong>۲</strong> — منو باز شد → گزینه <strong>GoldHEN</strong> را انتخاب کنید
+            </div>
+            <div style="padding:10px 0;border-bottom:1px solid rgba(0,153,255,.15)">
+                <strong>۳</strong> — پس از فعال شدن، بازی‌ها و برنامه‌های غیررسمی را نصب کنید
+            </div>
+            <div style="padding:10px 0">
+                <strong>۴</strong> — ⚠️ پس از هر بار خاموش/روشن کردن، مراحل را تکرار کنید (موقت است)
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="card">
-    <h2>📦 پیلودهای پیشنهادی</h2>
-    <p style="margin-bottom:12px">پس از موفقیت اکسپلویت، به ترتیب اجرا کنید:</p>
-    <div class="payload-item"><strong>kstuff-lite.elf</strong> — ابزارهای پایه سیستم</div>
-    <div class="payload-item"><strong>ShadowMountPlus.elf</strong> — نصب بکاپ و بازی</div>
-    <div class="payload-item"><strong>etaHEN.elf</strong> — محیط هوم‌برو</div>
-    <div class="payload-item"><strong>nanoDNS.elf</strong> — مسدودسازی دائمی سرورهای سونی</div>
+<!-- ========== PS5 SECTION ========== -->
+<div id="ps5-content" class="tab-content">
+    <div class="card ps5">
+        <h2>⚡ میزبان‌های جیلبریک PS5 — بدون فیلترشکن</h2>
+        <p>راهنمای کاربری اینترنت PS5 را باز کرده و روی یکی از دکمه‌ها بزنید:</p>
+        
+        <div class="btn-grid" style="margin-top: 20px;">
+            <a href="https://salt-12.github.io/main/index.html" target="_blank" class="btn ps5-btn primary">
+                <span class="btn-icon">👑</span> Night King Host — چند نسخه
+            </a>
+            <a href="https://thewizwikii.github.io/psfree" target="_blank" class="btn ps5-btn">
+                <span class="btn-icon">🔓</span> PSFree — 3.xx تا 4.51
+            </a>
+            <a href="https://jordyidk.github.io/slopkit/" target="_blank" class="btn ps5-btn">
+                <span class="btn-icon">⚡</span> Slopkit — اصلی
+            </a>
+            <a href="https://zecoxao.github.io/slopkit2/" target="_blank" class="btn ps5-btn">
+                <span class="btn-icon">🔄</span> Slopkit 2 — جایگزین
+            </a>
+        </div>
+    </div>
+
+    <div class="card ps5">
+        <h2>📋 سازگاری نسخه‌های PS5</h2>
+        <ul style="list-style:none;line-height:2.2;margin-top:10px">
+            <li>✅ <strong>3.00 تا 4.51</strong> — PSFree + etaHEN <span class="fw-badge fw-ok">پایدار</span></li>
+            <li>✅ <strong>5.00 تا 5.50</strong> — تست و محدود <span class="fw-badge fw-ok">موجود</span></li>
+            <li>⚠️ <strong>6.00 تا 7.61</strong> — روش‌های محدود <span class="fw-badge" style="background:rgba(255,208,0,.15);color:#ffd000;border:1px solid rgba(255,208,0,.3)">محدود</span></li>
+            <li>❌ <strong>8.00 تا 14.60</strong> — هنوز منتشر نشده <span class="fw-badge fw-no">پشتیبانی نمی‌شود</span></li>
+        </ul>
+    </div>
+
+    <div class="card ps5">
+        <h2>📦 مراحل پس از جیلبریک</h2>
+        <div style="line-height:2.2;margin-top:10px">
+            <div style="padding:10px 0;border-bottom:1px solid rgba(128,96,255,.15)">
+                <strong>۱</strong> — صفحه میزبان را باز کنید → منتظر تزریق اکسپلویت بمانید
+            </div>
+            <div style="padding:10px 0;border-bottom:1px solid rgba(128,96,255,.15)">
+                <strong>۲</strong> — اجرای <strong>kstuff-lite</strong> → دسترسی به سیستم
+            </div>
+            <div style="padding:10px 0;border-bottom:1px solid rgba(128,96,255,.15)">
+                <strong>۳</strong> — اجرای <strong>ShadowMountPlus</strong> → نصب بکاپ و بازی
+            </div>
+            <div style="padding:10px 0;border-bottom:1px solid rgba(128,96,255,.15)">
+                <strong>۴</strong> — اجرای <strong>etaHEN</strong> → محیط هوم‌برو
+            </div>
+            <div style="padding:10px 0">
+                <strong>۵</strong> — اجرای <strong>nanoDNS</strong> → مسدودسازی دائمی آپدیت
+            </div>
+        </div>
+    </div>
 </div>
 
+<!-- WARNINGS -->
 <div class="warning-box">
-    ⚠️ <strong>هشدار مهم:</strong><br><br>
-    • فقط روی فریمور <strong>۷.۰۰ تا ۱۳.۶۰</strong> کار می‌کند.<br>
-    • فریمور <strong>۱۴.۰۰ و بالاتر</strong> فعلاً پشتیبانی نمی‌شود.<br>
-    • ⛔ هرگز اجازه آپدیت خودکار ندهید.<br>
-    • ⛔ پس از جیلبریک از ورود به PSN خودداری کنید — ریسک مسدود شدن وجود دارد.<br>
-    • مسئولیت استفاده بر عهده کاربر است.
+    ⚠️ <strong>هشدارهای مهم:</strong><br><br>
+    • هیچ‌گاه اجازه ندهید کنسول به طور خودکار آپدیت شود — حتی اتصال لحظه‌ای کافی است.<br>
+    • پس از جیلبریک، از ورود به حساب کاربری PSN خودداری کنید — ریسک مسدود شدن دائمی وجود دارد.<br>
+    • نسخه <strong>14.00 و بالاتر</strong> هنوز هیچ روش عمومی برای آن منتشر نشده است.<br>
+    • مسئولیت استفاده و عواقب احتمالی بر عهده کاربر است.
 </div>
 
 <footer>
-    <p><strong>VORTEX PLAY</strong> — پلتفرم میزبانی ابزارهای جیلبریک کنسول</p>
-    <p style="margin-top:8px">پشتیبانی: <a href="#">@vortexplay3</a></p>
+    <p><strong>VORTEX PLAY</strong> — پلتفرم یکپارچه جیلبریک PS4 & PS5</p>
+    <p style="margin-top:8px">تمام میزبان‌ها از گیت‌هاب ← بدون فیلترشکن ← قابل دسترسی در ایران ✅</p>
+    <p style="margin-top:5px;font-size:.8rem;color:#406080">آخرین به‌روزرسانی: مهر ۱۴۰۵</p>
 </footer>
 
 </div>
+
+<script>
+// تغییر تب PS4/PS5
+function switchTab(console) {
+    // حذف فعال از همه
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    
+    // فعال کردن انتخاب شده
+    if (console === 'ps4') {
+        document.querySelector('.ps4-tab').classList.add('active');
+        document.getElementById('ps4-content').classList.add('active');
+    } else {
+        document.querySelector('.ps5-tab').classList.add('active');
+        document.getElementById('ps5-content').classList.add('active');
+    }
+}
+</script>
 </body>
 </html>
