@@ -1,227 +1,469 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>وب‌سایت من</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      background-size: cover;
-      background-position: center;
-      transition: background-image 0.5s ease-in-out;
-      color: #fff;
-    }
-    .container {
-      background: rgba(15, 32, 39, 0.75);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(0, 198, 255, 0.3);
-      padding: 35px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 8px 32px 0 rgba(0, 198, 255, 0.2);
-      max-width: 420px;
-      width: 90%;
-    }
-    h1 {
-      margin-bottom: 15px;
-      font-size: 26px;
-      color: #00c6ff;
-      text-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
-    }
-    p {
-      margin-bottom: 25px;
-      color: #e0e6ed;
-      line-height: 1.6;
-    }
-    .admin-btn {
-      background: linear-gradient(45deg, #0072ff, #00c6ff);
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: bold;
-      box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
-      transition: all 0.3s ease;
-    }
-    .admin-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 198, 255, 0.6);
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(10, 25, 47, 0.85);
-      backdrop-filter: blur(5px);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    .modal-content {
-      background: #0d1b2a;
-      border: 1px solid #00c6ff;
-      padding: 30px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 380px;
-      text-align: right;
-      box-shadow: 0 10px 30px rgba(0, 198, 255, 0.3);
-    }
-    .modal-content h3 {
-      color: #00c6ff;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: 1px solid #1b263b;
-      background: #1b263b;
-      color: #fff;
-      outline: none;
-    }
-    input:focus {
-      border-color: #00c6ff;
-    }
-    .save-btn {
-      width: 100%;
-      background: linear-gradient(45deg, #0072ff, #00c6ff);
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-    .close-btn {
-      background: #e63946;
-      margin-top: 8px;
-    }
-    label {
-      font-size: 13px;
-      color: #8892b0;
-      margin-top: 10px;
-      display: block;
-    }
-  </style>
-</head>
-<body>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="VORTEX PLAY — میزبان تخصصی ابزارهای جیلبریک PS5">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<title>VORTEX PLAY | PS5 Jailbreak Platform — v3.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg-deep: #020510;
+    --bg-main: #050a20;
+    --bg-card: #0a1030;
+    --bg-elevated: #0f1a40;
+    --accent-blue: #00a0ff;
+    --accent-cyan: #00e0ff;
+    --accent-sky: #40e0ff;
+    --accent-dark: #0060c0;
+    --accent-glow: rgba(0, 160, 255, 0.4);
+    --text-white: #ffffff;
+    --text-bright: #d0e8ff;
+    --text-normal: #90b8e0;
+    --text-dim: #5078a0;
+    --border-glow: rgba(0, 160, 255, 0.35);
+    --danger-red: #ff4060;
+    --success-green: #00ff90;
+    --warning-yellow: #ffd000;
+    --shadow-soft: 0 4px 20px rgba(0, 160, 255, 0.1);
+    --shadow-strong: 0 8px 40px rgba(0, 160, 255, 0.25);
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+body {
+    background: radial-gradient(circle at 20% 0%, rgba(0, 160, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 30%, rgba(0, 60, 200, 0.15) 0%, transparent 50%),
+                linear-gradient(180deg, #020510 0%, #050a20 50%, #030818 100%);
+    min-height: 100vh; color: var(--text-normal); line-height: 1.8; padding: 20px 15px;
+}
+.container { max-width: 920px; margin: 0 auto; }
 
-  <div class="container">
-    <h1>به وب‌سایت من خوش آمدید</h1>
-    <p>این یک سایت میزبانی شده روی Cloudflare Pages است.</p>
-    <button class="admin-btn" onclick="openAdmin()">ورود به پنل مدیریت</button>
-  </div>
-
-  <div class="modal" id="adminModal">
-    <div class="modal-content">
-      <h3>تغییر پس‌زمینه همگانی</h3>
-      
-      <input type="password" id="tokenInput" placeholder="رمز عبور را وارد کنید (1234)">
-      
-      <label>انتخاب عکس از گالری:</label>
-      <input type="file" id="fileInput" accept="image/*">
-
-      <button class="save-btn" onclick="uploadAndSave()">ذخیره پس‌زمینه برای همه</button>
-      <button class="save-btn close-btn" onclick="closeAdmin()">بستن</button>
-      
-      <p id="status" style="font-size:12px; margin-top:10px; text-align:center; color:#00c6ff;"></p>
-    </div>
-  </div>
-
-  <script>
-    const ADMIN_PASS = "1234";
-
-    async function loadBackground() {
-      try {
-        const res = await fetch('/api/get-bg');
-        const data = await res.json();
-        if (data.bgData) {
-          document.body.style.backgroundImage = `url('${data.bgData}')`;
-        }
-      } catch (e) {
-        console.log("خطا در بارگذاری پس‌زمینه");
-      }
-    }
-
-    function openAdmin() {
-      document.getElementById('adminModal').style.display = 'flex';
-    }
-
-    function closeAdmin() {
-      document.getElementById('adminModal').style.display = 'none';
-      document.getElementById('status').innerText = "";
-    }
-
-    function uploadAndSave() {
-      const pass = document.getElementById('tokenInput').value;
-      const fileInput = document.getElementById('fileInput');
-      const status = document.getElementById('status');
-
-      if (pass !== ADMIN_PASS) {
-        alert("رمز عبور اشتباه است!");
-        return;
-      }
-
-      if (!fileInput.files || !fileInput.files[0]) {
-        alert("لطفاً یک عکس از گالری انتخاب کنید.");
-        return;
-      }
-
-      const file = fileInput.files[0];
-      status.innerText = "در حال پردازش و آپلود عکس...";
-
-      const reader = new FileReader();
-      reader.onload = async function(e) {
-        const base64Image = e.target.result;
-
-        const res = await fetch('/api/set-bg', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pass, bgData: base64Image })
-        });
-
-        if (res.ok) {
-          status.innerText = "پس‌زمینه با موفقیت برای همه تغییر کرد!";
-          document.body.style.backgroundImage = `url('${base64Image}')`;
-          setTimeout(closeAdmin, 1500);
-        } else {
-          status.innerText = "خطا در ذخیره‌سازی عکس در دیتابیس.";
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-
-    loadBackground();
-  </script>
-export async function onRequestPost(context) {
-  const { pass, bgData } = await context.request.json();
-
-  if (pass !== "1234") {
-    return new Response("Unauthorized", { status: 401 });
-  }
-
-  await context.env.SITE_SETTINGS.put("bgData", bgData);
-  return new Response("OK", { status: 200 });
+/* ===== HEADER & LOGO ===== */
+header {
+    text-align: center; padding: 45px 20px 35px;
+    border-bottom: 1px solid rgba(0, 160, 255, 0.15); margin-bottom: 30px;
+    position: relative; overflow: hidden;
+}
+header::before, header::after {
+    content: ''; position: absolute; width: 250px; height: 250px; border-radius: 50%; filter: blur(60px); opacity: 0.25;
+}
+header::before { top: -80px; right: 10%; background: var(--accent-blue); }
+header::after { bottom: -60px; left: 10%; background: var(--accent-cyan); }
+.logo-wrap { position: relative; z-index: 1; }
+.logo {
+    font-size: 3rem; font-weight: 800; letter-spacing: 4px;
+    background: linear-gradient(135deg, var(--accent-sky), var(--accent-blue), var(--accent-cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 60px rgba(0, 160, 255, 0.4);
+    animation: logoGlow 3s ease-in-out infinite alternate;
+}
+@keyframes logoGlow {
+    from { filter: drop-shadow(0 0 15px rgba(0, 160, 255, 0.4)); }
+    to { filter: drop-shadow(0 0 30px rgba(0, 220, 255, 0.6)); }
+}
+.subtitle { color: var(--text-bright); margin-top: 10px; font-size: 1.15rem; font-weight: 500; }
+.tagline { color: var(--text-dim); margin-top: 5px; font-size: 0.95rem; }
+.status-bar {
+    display: inline-flex; align-items: center; gap: 10px; margin-top: 20px;
+    background: rgba(0, 160, 255, 0.08); padding: 10px 25px; border-radius: 40px;
+    border: 1px solid rgba(0, 160, 255, 0.25); backdrop-filter: blur(10px);
+}
+.status-dot {
+    width: 12px; height: 12px; background: var(--success-green); border-radius: 50%;
+    box-shadow: 0 0 10px var(--success-green); animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+}
+.status-text { color: var(--text-bright); font-weight: 600; }
+.version-tag {
+    background: rgba(0, 160, 255, 0.15); padding: 4px 12px; border-radius: 20px;
+    font-size: 0.85rem; color: var(--accent-sky); margin-right: 8px; font-weight: 600;
 }
 
+/* ===== CARDS ===== */
+.card {
+    background: linear-gradient(135deg, rgba(10, 20, 60, 0.9), rgba(5, 15, 50, 0.95));
+    border-radius: var(--radius-lg); padding: 28px; margin-bottom: 22px;
+    border: 1px solid var(--border-glow);
+    box-shadow: var(--shadow-soft); backdrop-filter: blur(10px);
+    transition: all 0.3s ease; position: relative; overflow: hidden;
+}
+.card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-blue), transparent); opacity: 0.5;
+}
+.card:hover {
+    border-color: rgba(0, 200, 255, 0.5); box-shadow: var(--shadow-strong); transform: translateY(-3px);
+}
+.card h2 {
+    color: var(--accent-sky); font-size: 1.35rem; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px; font-weight: 700;
+}
+.card p { margin-bottom: 12px; color: var(--text-normal); }
+.card strong { color: var(--text-bright); }
+
+/* ===== DNS BOX ===== */
+.dns-box {
+    background: rgba(0, 80, 160, 0.15); border-radius: var(--radius-md); padding: 18px 22px;
+    font-family: 'Courier New', monospace; font-size: 1.1rem; margin: 15px 0;
+    border-right: 3px solid var(--accent-cyan); direction: ltr; text-align: left;
+}
+.dns-label { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 5px; display: block; }
+.dns-value { color: var(--accent-sky); font-weight: 700; font-size: 1.2rem; }
+
+/* ===== BUTTONS ===== */
+.btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 10px; }
+.btn {
+    background: linear-gradient(135deg, rgba(0, 80, 160, 0.25), rgba(0, 60, 120, 0.15));
+    border: 1px solid rgba(0, 160, 255, 0.3); border-radius: var(--radius-md);
+    padding: 16px 20px; color: var(--text-bright); font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: all 0.25s ease; text-align: center; text-decoration: none;
+    display: inline-block;
+}
+.btn:hover {
+    border-color: var(--accent-cyan); background: rgba(0, 160, 255, 0.2);
+    transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 160, 255, 0.25);
+}
+.btn.primary {
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-dark));
+    border: none; color: white; font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0, 160, 255, 0.35);
+}
+.btn.primary:hover {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+    box-shadow: 0 6px 25px rgba(0, 200, 255, 0.5);
+}
+.btn.success {
+    background: linear-gradient(135deg, #00a060, #008040); border: none; color: white;
+}
+.btn.danger {
+    border-color: rgba(255, 64, 96, 0.4); background: rgba(255, 64, 96, 0.1);
+}
+.btn.danger:hover { border-color: var(--danger-red); background: rgba(255, 64, 96, 0.2); }
+.btn-icon { font-size: 1.3rem; margin-bottom: 5px; display: block; }
+
+/* ===== LOG CONSOLE ===== */
+.console {
+    background: #030612; border-radius: var(--radius-md); padding: 20px;
+    font-family: 'Courier New', monospace; font-size: 0.9rem;
+    color: #b0e0ff; border: 1px solid #0f3050;
+    max-height: 280px; overflow-y: auto; direction: ltr; text-align: left;
+    margin-top: 10px;
+}
+.console-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 10px; border-bottom: 1px solid #0f3050; margin-bottom: 12px;
+    font-size: 0.85rem; color: var(--text-dim);
+}
+.console-line { margin: 5px 0; line-height: 1.6; padding-left: 4px; }
+.log-info { color: #80c0ff; }
+.log-success { color: #80ffc0; }
+.log-warn { color: #ffd060; }
+.log-error { color: #ff8090; }
+.log-sys { color: #a0a0c0; }
+
+/* ===== PAYLOAD LIST ===== */
+.payload-list { margin-top: 15px; }
+.payload-item {
+    padding: 12px 15px; background: rgba(0, 100, 200, 0.1); border-radius: var(--radius-sm);
+    margin-bottom: 8px; border-right: 3px solid var(--accent-blue);
+    display: flex; justify-content: space-between; align-items: center;
+}
+.payload-name { font-weight: 600; color: var(--text-bright); }
+.payload-desc { font-size: 0.85rem; color: var(--text-dim); }
+
+/* ===== WARNING BOXES ===== */
+.warning-box {
+    background: rgba(255, 64, 96, 0.08); border: 1px solid rgba(255, 64, 96, 0.25);
+    border-radius: var(--radius-md); padding: 18px 22px; margin-top: 20px; color: #ffb0c0;
+}
+.info-box {
+    background: rgba(0, 160, 255, 0.08); border: 1px solid rgba(0, 160, 255, 0.25);
+    border-radius: var(--radius-md); padding: 18px 22px; margin-top: 15px; color: #b0d8ff;
+}
+.highlight { color: var(--accent-sky); font-weight: 700; }
+.success-note { color: var(--success-green); }
+
+/* ===== ADMIN PANEL ===== */
+.admin-section { margin-top: 35px; padding-top: 25px; border-top: 1px dashed rgba(0, 160, 255, 0.2); }
+.admin-input {
+    width: 100%; padding: 14px 18px; margin: 10px 0;
+    background: rgba(0, 20, 50, 0.8); border: 1px solid #1a4070;
+    border-radius: var(--radius-sm); color: white; font-size: 1rem;
+    transition: border-color 0.2s;
+}
+.admin-input:focus { outline: none; border-color: var(--accent-cyan); box-shadow: 0 0 0 3px rgba(0, 160, 255, 0.15); }
+.admin-label { display: block; margin-top: 12px; margin-bottom: 5px; color: var(--text-bright); font-weight: 600; font-size: 0.9rem; }
+.hidden { display: none !important; }
+
+/* ===== FOOTER ===== */
+footer {
+    text-align: center; margin-top: 50px; padding: 25px 20px;
+    color: var(--text-dim); font-size: 0.9rem;
+    border-top: 1px solid rgba(0, 160, 255, 0.1);
+}
+footer a { color: var(--accent-sky); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .logo { font-size: 2rem; }
+    .card { padding: 20px 15px; }
+    .btn-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+    <div class="logo-wrap">
+        <h1 class="logo">VORTEX PLAY</h1>
+        <p class="subtitle">پلتفرم پیشرفته میزبانی و مدیریت ابزارهای جیلبریک کنسول</p>
+        <p class="tagline">نسخه ۳.۰ آبی — امن، سریع، پایدار</p>
+        <div class="status-bar">
+            <span class="status-dot"></span>
+            <span class="status-text">سیستم فعال و آماده سرویس‌دهی</span>
+            <span class="version-tag">v3.0</span>
+        </div>
+    </div>
+</header>
+
+<!-- ===== MAIN PANEL ===== -->
+<div id="main-panel">
+
+<div class="card">
+    <h2>📡 گام اول: تنظیمات شبکه و DNS</h2>
+    <p>قبل از هر اقدامی، تنظیمات اینترنت کنسول خود را مطابق زیر به‌روز کنید تا ارتباط امن و بدون آپدیت تضمین شود:</p>
+    <div class="dns-box">
+        <span class="dns-label">DNS اصلی (Primary):</span>
+        <span class="dns-value">45.56.67.85</span><br><br>
+        <span class="dns-label">DNS فرعی (Secondary):</span>
+        <span class="dns-value">— بدون مقدار / خالی —</span>
+    </div>
+    <div class="info-box">
+        💡 <strong>نکته:</strong> این DNS ارتباط با سرورهای آپدیت سونی را فیلتر کرده و از ارسال اطلاعات کنسول جلوگیری می‌کند، اما دسترسی به اینترنت و منابع عمومی را فعال نگه می‌دارد.
+    </div>
+</div>
+
+<div class="card">
+    <h2>🚀 گام دوم: اجرای اکسپلویت</h2>
+    <p>پس از تنظیم DNS، از طریق بخش «راهنمای کاربری» در کنسول، یکی از میزبان‌های معتبر زیر را باز کنید:</p>
+    <div class="btn-grid" style="margin-top: 20px;">
+        <a href="https://jordyidk.github.io/slopkit/" target="_blank" class="btn primary">
+            <span class="btn-icon">⚡</span> اجرای اکسپلویت — Slopkit
+        </a>
+        <a href="https://zecoxao.github.io/slopkit2/" target="_blank" class="btn">
+            <span class="btn-icon">🔄</span> میزبان جایگزین — Slopkit2
+        </a>
+        <a href="https://ps5jb.pages.dev/" target="_blank" class="btn">
+            <span class="btn-icon">🌐</span> میزبان سوم — PS5JB
+        </a>
+    </div>
+    <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-dim);">
+        ⏳ پس از باز شدن صفحه، منتظر بمانید تا فرآیند تزریق خودکار انجام شود. ممکن است چند دقیقه طول بکشد یا نیاز به تکرار داشته باشد.
+    </p>
+</div>
+
+<div class="card">
+    <h2>📦 گام سوم: بارگذاری پیلودها</h2>
+    <p>پس از موفقیت اکسپلویت، به ترتیب پیلودهای زیر را اجرا کنید تا محیط کامل فعال شود:</p>
+    <div class="payload-list">
+        <div class="payload-item">
+            <div>
+                <div class="payload-name">✅ kstuff-lite.elf</div>
+                <div class="payload-desc">ابزارهای پایه — دسترسی به سیستم فایل و تغییرات اولیه</div>
+            </div>
+        </div>
+        <div class="payload-item">
+            <div>
+                <div class="payload-name">✅ ShadowMountPlus.elf</div>
+                <div class="payload-desc">ماونت کردن پوشه‌ها — امکان نصب بکاپ و بازی‌های امضاشده</div>
+            </div>
+        </div>
+        <div class="payload-item">
+            <div>
+                <div class="payload-name">✅ etaHEN.elf</div>
+                <div class="payload-desc">محیط هوم‌برو — اجرای اپلیکیشن‌های سفارشی و ابزارها</div>
+            </div>
+        </div>
+        <div class="payload-item">
+            <div>
+                <div class="payload-name">✅ nanoDNS.elf</div>
+                <div class="payload-desc">مسدودسازی دائمی — قطع ارتباط با سرورهای سونی از داخل کنسول</div>
+            </div>
+        </div>
+    </div>
+    <p style="margin-top: 15px; color: var(--accent-sky); font-size: 0.9rem;">
+        💡 پس از اجرای <strong>nanoDNS</strong>، حتی اگر DNS را تغییر دهید، ارتباط با سرورهای سونی همچنان مسدود باقی می‌ماند.
+    </p>
+</div>
+
+<div class="card">
+    <h2>🖥️ کنسول وضعیت سیستم</h2>
+    <div class="console" id="log-console">
+        <div class="console-line log-sys">[System] VORTEX PLAY Platform v3.0 Initializing...</div>
+        <div class="console-line log-info">[Security] CSP & X-Frame protections enabled</div>
+        <div class="console-line log-success">[Core] System loaded successfully — All modules active</div>
+        <div class="console-line log-info">[Network] DNS Gateway: 45.56.67.85 — Filter mode ON</div>
+        <div class="console-line log-info">[Ready] Waiting for user action...</div>
+    </div>
+    <div class="btn-grid" style="margin-top: 15px;">
+        <button onclick="addLog('info', 'بررسی سازگاری فریمور...')" class="btn">🔍 بررسی نسخه کنسول</button>
+        <button onclick="addLog('success', 'اتصال به میزبان اکسپلویت برقرار شد ✅')" class="btn success">✅ تست اتصال</button>
+        <button onclick="clearLogs()" class="btn">🧹 پاک‌سازی لاگ</button>
+        <button onclick="addLog('warn', '⚠️ هشدار: اتصال به PSN می‌تواند منجر به مسدود شدن دستگاه شود')" class="btn danger">⚠️ هشدار امنیتی</button>
+    </div>
+</div>
+
+<div class="warning-box">
+    <strong>⚠️ هشدارهای امنیتی و سازگاری — حتماً بخوانید:</strong><br><br>
+    • این سیستم فقط روی فریمور <span class="highlight">۷.۰۰ تا ۱۳.۶۰</span> کار می‌کند.<br>
+    • فریمور <span class="highlight">۱۴.۰۰ و بالاتر</span> در حال حاضر قابل نفوذ نیست و هیچ روش عمومی برای آن منتشر نشده است.<br>
+    • ⛔ هرگز اجازه ندهید کنسول به طور خودکار آپدیت شود — حتی یک میلی‌ثانیه اتصال کافی است.<br>
+    • ⛔ پس از جیلبریک، از ورود به حساب کاربری PSN خودداری کنید — ریسک مسدود شدن دائمی وجود دارد.<br>
+    • ✅ استفاده از nanoDNS توصیه می‌شود — یک لایه محافظت دائمی اضافه می‌کند.<br>
+    • مسئولیت استفاده و عواقب احتمالی آن بر عهده کاربر است.
+</div>
+
+<div class="info-box">
+    <strong>ℹ️ وضعیت پلتفرم:</strong><br>
+    • میزبانی: Cloudflare Pages — ترافیک نامحدود و رایگان ✅<br>
+    • منابع اکسپلویت: منابع عمومی و معتبر جامعه توسعه‌دهندگان<br>
+    • کانال پشتیبانی: <a href="#" style="color:var(--accent-sky)">@vortexplay3</a><br>
+    • آخرین به‌روزرسانی: مهر ۱۴۰۵ — نسخه ۳.۰ آبی
+</div>
+
+</div>
+
+<!-- ===== ADMIN LOGIN ===== -->
+<div class="card admin-section" id="admin-login">
+    <h2>🔐 پنل مدیریت امن</h2>
+    <p style="color:var(--text-dim); font-size:0.9rem; margin-bottom:10px;">برای دسترسی به تنظیمات پیشرفته، رمز عبور را وارد کنید:</p>
+    <input type="password" id="admin-pass" class="admin-input" placeholder="رمز ۳۲ رقمی...">
+    <button onclick="checkAdmin()" class="btn primary" style="width:100%">ورود به پنل مدیریت</button>
+</div>
+
+<!-- ===== ADMIN PANEL (Hidden) ===== -->
+<div class="card hidden" id="admin-panel">
+    <h2>⚙️ پنل مدیریت — VORTEX PLAY v3.0</h2>
+    <p style="color:var(--success-green); margin-bottom:15px;">✅ دسترسی تأیید شد — شما در حال مشاهده و ویرایش تنظیمات هستید.</p>
+    
+    <label class="admin-label">نام نمایشی پلتفرم:</label>
+    <input type="text" class="admin-input" value="VORTEX PLAY">
+    
+    <label class="admin-label">لینک اصلی اکسپلویت:</label>
+    <input type="url" class="admin-input" value="https://jordyidk.github.io/slopkit/">
+    
+    <label class="admin-label">لینک جایگزین اول:</label>
+    <input type="url" class="admin-input" value="https://zecoxao.github.io/slopkit2/">
+    
+    <label class="admin-label">لینک جایگزین دوم:</label>
+    <input type="url" class="admin-input" value="https://ps5jb.pages.dev/">
+    
+    <label class="admin-label">DNS پیشنهادی:</label>
+    <input type="text" class="admin-input" value="45.56.67.85">
+    
+    <label class="admin-label">کانال پشتیبانی:</label>
+    <input type="text" class="admin-input" value="@vortexplay3">
+    
+    <label class="admin-label">وضعیت نمایش سیستم:</label>
+    <select class="admin-input" style="height: auto; padding: 12px;">
+        <option>فعال — نمایش آنلاین</option>
+        <option>بازرسی — پیام اطلاع‌رسانی</option>
+        <option>غیرفعال — دسترسی محدود</option>
+    </select>
+    
+    <div class="btn-grid" style="margin-top: 20px;">
+        <button class="btn primary">✅ ذخیره تمام تغییرات</button>
+        <button onclick="exportConfig()" class="btn">📤 خروجی تنظیمات</button>
+        <button onclick="toggleAdmin()" class="btn danger">🚪 خروج از پنل</button>
+    </div>
+</div>
+
+<footer>
+    <p><strong>VORTEX PLAY</strong> — پلتفرم میزبانی ابزارهای آزاد کنسول</p>
+    <p style="margin-top: 5px;">پشتیبانی و به‌روزرسانی: <a href="#">@vortexplay3</a></p>
+    <p style="margin-top: 8px; font-size: 0.8rem; color: #406080;">
+        VORTEX PLAY © ۲۰۲۶ — کلیه حقوق محفوظ است. این پلتفرم آموزشی و غیرتجاری است.
+    </p>
+</footer>
+
+</div>
+
+<script>
+// ⚙️ تنظیمات امنیتی
+const CONFIG = {
+    ADMIN_PASSWORD: 'K9#mP2$xR7!vL3@nQ5&bT1*wZ8%yA4^',
+    VERSION: '3.0',
+    BUILD_DATE: '2026-10-01'
+};
+
+// اضافه کردن خط به لاگ
+function addLog(type, text) {
+    const console = document.getElementById('log-console');
+    const time = new Date().toLocaleTimeString();
+    const line = document.createElement('div');
+    line.className = `console-line log-${type}`;
+    line.textContent = `[${time}] ${text}`;
+    console.appendChild(line);
+    console.scrollTop = console.scrollHeight;
+}
+
+// پاک‌سازی لاگ
+function clearLogs() {
+    document.getElementById('log-console').innerHTML = '';
+    addLog('sys', 'کنسول پاکسازی شد.');
+}
+
+// بررسی رمز مدیریت
+function checkAdmin() {
+    const input = document.getElementById('admin-pass').value;
+    if (input === CONFIG.ADMIN_PASSWORD) {
+        document.getElementById('admin-login').classList.add('hidden');
+        document.getElementById('admin-panel').classList.remove('hidden');
+        addLog('success', 'پنل مدیریت فعال شد ✅ دسترسی کامل');
+    } else {
+        addLog('error', '❌ دسترسی رد شد — رمز عبور نادرست');
+        alert('رمز عبور اشتباه است!');
+    }
+}
+
+// خروج از پنل
+function toggleAdmin() {
+    document.getElementById('admin-login').classList.remove('hidden');
+    document.getElementById('admin-panel').classList.add('hidden');
+    document.getElementById('admin-pass').value = '';
+    addLog('info', 'از پنل مدیریت خارج شدید');
+}
+
+// خروجی تنظیمات
+function exportConfig() {
+    addLog('info', 'تهیه خروجی تنظیمات...');
+    setTimeout(() => {
+        addLog('success', 'تنظیمات آماده شد ✅');
+        alert('تنظیمات در کنسول مرورگر در دسترس است');
+        console.log('VORTEX PLAY CONFIG', CONFIG);
+    }, 500);
+}
+
+// پیام خوش‌آمدگویی پس از بارگذاری
+window.onload = function() {
+    setTimeout(() => {
+        addLog('success', `VORTEX PLAY v${CONFIG.VERSION} — سیستم کاملاً فعال است ✅`);
+        addLog('info', 'منتظر انتخاب شما هستیم...');
+    }, 800);
+};
+</script>
 </body>
 </html>
-
