@@ -1,9 +1,3 @@
-// ==========================================================
-// VORTEX PRO — نسخه نهایی و سالم
-// پنل مدیریت + سرور VLESS+Reality + سابسکریپشن
-// بدون قالب شکسته | بدون ارور | آماده دیپلوی
-// ==========================================================
-
 const CONFIG = {
   ADMIN_PASSWORD: 'vortex2026',
   PANEL_PATH: '/vortex',
@@ -14,10 +8,6 @@ const CONFIG = {
   DEFAULT_EXPIRE_DAYS: 365,
   MAX_USERS: 50
 };
-
-// ==========================================================
-// توابع کمکی
-// ==========================================================
 
 function generateUUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
@@ -38,9 +28,8 @@ async function generateX25519Pair() {
     { name: 'X25519' }, true, ['deriveKey']
   );
   const pubRaw = await crypto.subtle.exportKey('raw', keypair.publicKey);
-  const pubB64 = btoa(String.fromCharCode(...new Uint8Array(pubRaw)))
+  return btoa(String.fromCharCode(...new Uint8Array(pubRaw)))
     .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
-  return pubB64;
 }
 
 function getRandomSNI() {
@@ -53,10 +42,6 @@ function formatDate(timestamp) {
   return d.toLocaleDateString('fa-IR') + ' — ' + d.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
 }
 
-// ==========================================================
-// مدیریت کاربران با KV
-// ==========================================================
-
 async function getUsers(env) {
   const data = await env.VORTEX_KV.get('users');
   return data ? JSON.parse(data) : [];
@@ -68,9 +53,7 @@ async function saveUsers(env, users) {
 
 async function createUser(env, host, name, days) {
   const users = await getUsers(env);
-  if (users.length >= CONFIG.MAX_USERS) {
-    return { error: '❌ تعداد کاربران به حداکثر رسید' };
-  }
+  if (users.length >= CONFIG.MAX_USERS) return { error: '❌ تعداد کاربران به حداکثر رسید' };
 
   const uuid = generateUUID();
   const shortId = generateShortID();
@@ -81,34 +64,19 @@ async function createUser(env, host, name, days) {
 
   const link = `vless://${uuid}@${host}:${CONFIG.PORT}?path=${encodeURIComponent(CONFIG.PANEL_PATH)}&security=reality&encryption=none&alpn=${CONFIG.ALPN.join(',')}&pbk=${publicKey}&fp=${CONFIG.FINGERPRINT}&sni=${sni}&sid=${shortId}&spk=${publicKey}&flow=xtls-rprx-vision#VORTEX-${encodeURIComponent(name)}`;
 
-  const user = {
-    id: generateUUID(),
-    name,
-    uuid,
-    shortId,
-    publicKey,
-    sni,
-    link,
-    createdAt,
-    expiresAt,
-    active: true
-  };
-
-  users.push(user);
+  users.push({
+    id: generateUUID(), name, uuid, shortId, publicKey, sni, link,
+    createdAt, expiresAt, active: true
+  });
   await saveUsers(env, users);
-  return user;
+  return { link };
 }
 
 async function deleteUser(env, userId) {
   let users = await getUsers(env);
   users = users.filter(u => u.id !== userId);
   await saveUsers(env, users);
-  return true;
 }
-
-// ==========================================================
-// صفحه ورود
-// ==========================================================
 
 function renderLogin() {
   return `<!DOCTYPE html>
@@ -120,36 +88,31 @@ function renderLogin() {
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(135deg,#020617 0%,#0f172a 50%,#1e1b4b 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.box{background:rgba(15,23,42,.85);border-radius:24px;padding:35px;width:100%;max-width:420px;border:1px solid rgba(59,130,246,.2);box-shadow:0 20px 60px rgba(59,130,246,.15)}
+body{font-family:Vazirmatn,sans-serif;background:linear-gradient(135deg,#020617 0%,#0f172a 50%,#1e1b4b 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.box{background:rgba(15,23,42,.85);border-radius:24px;padding:35px;width:100%;max-width:420px;border:1px solid rgba(59,130,246,.2)}
 h1{font-size:1.8rem;color:#22d3ee;text-align:center;margin-bottom:8px}
 .desc{color:#94a3b8;text-align:center;margin-bottom:30px}
-input{width:100%;padding:15px 18px;border-radius:12px;border:1px solid rgba(129,140,248,.3);background:rgba(30,41,59,.6);color:#f8fafc;font-size:1rem;outline:none;transition:.25s;margin-bottom:20px}
+input{width:100%;padding:15px 18px;border-radius:12px;border:1px solid rgba(129,140,248,.3);background:rgba(30,41,59,.6);color:#f8fafc;font-size:1rem;margin-bottom:20px;outline:none}
 input:focus{border-color:#22d3ee;box-shadow:0 0 0 3px rgba(34,211,238,.15)}
-button{width:100%;padding:15px;border-radius:12px;border:none;background:linear-gradient(135deg,#7c3aed,#22d3ee);color:#fff;font-weight:700;font-size:1rem;cursor:pointer;transition:.2s}
-button:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(124,58,237,.3)}
+button{width:100%;padding:15px;border-radius:12px;border:none;background:linear-gradient(135deg,#7c3aed,#22d3ee);color:#fff;font-weight:700;font-size:1rem;cursor:pointer}
+button:hover{transform:translateY(-2px)}
 </style>
 </head>
 <body>
 <div class="box">
-  <h1>⚡ VORTEX PRO</h1>
-  <p class="desc">ورود به پنل مدیریت</p>
-  <form method="get">
-    <input type="password" name="token" placeholder="رمز پنل را وارد کنید..." required>
-    <button type="submit">ورود 🔐</button>
-  </form>
+<h1>⚡ VORTEX PRO</h1>
+<p class="desc">ورود به پنل مدیریت</p>
+<form method="get">
+<input type="password" name="token" placeholder="رمز پنل را وارد کنید..." required>
+<button>ورود 🔐</button>
+</form>
 </div>
 </body>
 </html>`;
 }
 
-// ==========================================================
-// صفحه پنل اصلی
-// ==========================================================
-
 function renderPanel(host, users, message = '', msgType = '') {
   const subLink = `https://${host}${CONFIG.PANEL_PATH}/sub?token=${CONFIG.ADMIN_PASSWORD}`;
-
   return `<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -158,34 +121,30 @@ function renderPanel(host, users, message = '', msgType = '') {
 <title>VORTEX PRO PANEL</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#020617;--bg2:#0f172a;--card:rgba(15,23,42,.85);--p:#7c3aed;--c:#22d3ee;--g:#10b981;--y:#f59e0b;--r:#ef4444;--t:#f8fafc;--m:#94a3b8;--b1:rgba(255,255,255,.08)}
+:root{--bg:#020617;--bg2:#0f172a;--card:rgba(15,23,42,.85);--p:#7c3aed;--c:#22d3ee;--g:#10b981;--t:#f8fafc;--m:#94a3b8}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Vazirmatn',sans-serif;background:radial-gradient(ellipse at 20% 0%,rgba(124,58,237,.15)0%,transparent 50%),radial-gradient(ellipse at 80% 10%,rgba(34,211,238,.1)0%,transparent 50%),linear-gradient(180deg,var(--bg)0%,var(--bg2)100%);color:var(--t);min-height:100vh;padding:15px;line-height:1.7}
+body{font-family:Vazirmatn,sans-serif;background:radial-gradient(ellipse at 20% 0%,rgba(124,58,237,.15)0%,transparent 50%),radial-gradient(ellipse at 80% 10%,rgba(34,211,238,.1)0%,transparent 50%),linear-gradient(180deg,var(--bg)0%,var(--bg2)100%);color:var(--t);min-height:100vh;padding:15px;line-height:1.7}
 .container{max-width:1100px;margin:0 auto}
 header{text-align:center;margin-bottom:30px;padding:20px 0}
-h1{font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--p),var(--c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px}
+h1{font-size:2rem;background:linear-gradient(135deg,var(--p),var(--c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px}
 .subtitle{color:var(--m)}
-.card{background:var(--card);border-radius:20px;padding:25px;margin-bottom:20px;border:1px solid rgba(34,211,238,.15);backdrop-filter:blur(10px)}
+.card{background:var(--card);border-radius:20px;padding:25px;margin-bottom:20px;border:1px solid rgba(34,211,238,.15)}
 h2{font-size:1.2rem;color:var(--c);margin-bottom:18px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:15px}
-label{font-weight:600;color:var(--t);display:block;margin:12px 0 5px;font-size:.95rem}
+label{font-weight:600;display:block;margin:12px 0 5px}
 input{width:100%;padding:13px;border-radius:10px;border:1px solid rgba(124,58,237,.3);background:rgba(30,41,59,.6);color:var(--t);font-size:1rem;outline:none}
-input:focus{border-color:var(--c);box-shadow:0 0 0 3px rgba(34,211,238,.15)}
-button{padding:13px 22px;border-radius:10px;border:none;font-weight:700;cursor:pointer;transition:.2s;font-family:inherit}
+input:focus{border-color:var(--c)}
+button{padding:13px 22px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
 .btn-primary{background:linear-gradient(135deg,var(--p),var(--c));color:#fff;width:100%;margin-top:8px}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(124,58,237,.25)}
-.btn-secondary{background:rgba(51,65,85,.6);color:var(--t);margin:6px 4px 0 0;border:1px solid rgba(148,163,184,.2)}
-.btn-secondary:hover{background:rgba(71,85,105,.6)}
+.btn-secondary{background:rgba(51,65,85,.6);color:var(--t);margin:6px 4px 0 0}
 .btn-danger{background:rgba(220,38,38,.15);color:#fca5a5;border:1px solid rgba(220,38,38,.25)}
-.btn-danger:hover{background:rgba(220,38,38,.25)}
-.alert{padding:14px;border-radius:12px;margin:15px 0;display:${message ? 'block' : 'none'}}
+.alert{padding:14px;border-radius:12px;margin:15px 0;display:${message?'block':'none'}}
 .alert-success{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:#6ee7aa}
 .alert-error{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#fca5a5}
 .code{background:rgba(0,0,0,.4);padding:14px;border-radius:10px;direction:ltr;text-align:left;overflow-x:auto;margin-top:8px;font-size:.85rem;color:#6ee7aa;word-break:break-all}
 table{width:100%;border-collapse:collapse;margin-top:15px}
 th,td{padding:12px 10px;text-align:right;border-bottom:1px solid rgba(255,255,255,.05);font-size:.9rem}
 th{color:var(--c);font-weight:700}
-tr:hover{background:rgba(255,255,255,.02)}
 .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:.75rem;font-weight:700}
 .badge-active{background:rgba(16,185,129,.15);color:#6ee7aa}
 .badge-expired{background:rgba(245,158,11,.15);color:#fcd34d}
@@ -193,89 +152,44 @@ tr:hover{background:rgba(255,255,255,.02)}
 </head>
 <body>
 <div class="container">
-  <header>
-    <h1>⚡ VORTEX PRO PANEL</h1>
-    <p class="subtitle">مدیریت کامل فیلترشکن VLESS+Reality</p>
-  </header>
-
-  ${message ? `<div class="alert ${msgType === 'success' ? 'alert-success' : 'alert-error'}">${message}</div>` : ''}
-
-  <div class="card">
-    <h2>➕ ایجاد کاربر جدید</h2>
-    <form method="post" action="${CONFIG.PANEL_PATH}/new?token=${CONFIG.ADMIN_PASSWORD}">
-      <div class="grid">
-        <div>
-          <label>نام کاربر</label>
-          <input type="text" name="name" placeholder="مثال: تلفن همراه" required>
-        </div>
-        <div>
-          <label>تاریخ انقضا (روز)</label>
-          <input type="number" name="days" value="${CONFIG.DEFAULT_EXPIRE_DAYS}" min="1">
-        </div>
-      </div>
-      <button type="submit" class="btn-primary">✅ ساخت کانفیگ جدید</button>
-    </form>
-  </div>
-
-  <div class="card">
-    <h2>📋 لینک سابسکریپشن</h2>
-    <div class="code">${subLink}</div>
-    <button class="btn-secondary" onclick="navigator.clipboard.writeText('${subLink}').then(()=>alert('✅ کپی شد!'))">📋 کپی لینک ساب</button>
-  </div>
-
-  <div class="card">
-    <h2>👥 کاربران (${users.length} نفر)</h2>
-    ${users.length === 0 ? '<p style="color:#94a3b8">هنوز کاربری ایجاد نشده است</p>' : `
-    <table>
-      <thead>
-        <tr>
-          <th>نام</th>
-          <th>تاریخ ایجاد</th>
-          <th>تاریخ انقضا</th>
-          <th>وضعیت</th>
-          <th>عملیات</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${users.map(u => {
-          const isExpired = u.expiresAt && Date.now() > u.expiresAt;
-          return `
-          <tr>
-            <td><strong>${u.name}</strong></td>
-            <td>${formatDate(u.createdAt)}</td>
-            <td>${formatDate(u.expiresAt)}</td>
-            <td><span class="badge ${isExpired ? 'badge-expired' : 'badge-active'}">${isExpired ? 'منقضی شده' : 'فعال ✅'}</span></td>
-            <td>
-              <button class="btn-secondary" onclick="navigator.clipboard.writeText('${u.link}').then(()=>alert('✅ لینک کپی شد!'))">کپی لینک</button>
-              <form method="post" action="${CONFIG.PANEL_PATH}/delete?id=${u.id}&token=${CONFIG.ADMIN_PASSWORD}" style="display:inline" onsubmit="return confirm('آیا مطمئن هستید؟')">
-                <button type="submit" class="btn-danger">حذف</button>
-              </form>
-            </td>
-          </tr>`;
-        }).join('')}
-      </tbody>
-    </table>`}
-  </div>
-
-  <div class="card">
-    <h2>ℹ️ اطلاعات سرور</h2>
-    <ul style="color:#94a3b8;line-height:2;margin-top:10px">
-      <li>🔹 پروتکل: <strong style="color:#6ee7aa">VLESS + Reality + Vision</strong></li>
-      <li>🔹 پورت: <strong>${CONFIG.PORT}</strong></li>
-      <li>🔹 SNI پیشنهادی: <strong>${CONFIG.SNI_LIST[0]}</strong></li>
-      <li>🔹 Fingerprint: <strong>${CONFIG.FINGERPRINT}</strong></li>
-      <li>🔹 دامنه سرور: <strong>${host}</strong></li>
-      <li>🔹 حداکثر کاربر: <strong>${CONFIG.MAX_USERS}</strong></li>
-    </ul>
-  </div>
+<header>
+<h1>⚡ VORTEX PRO PANEL</h1>
+<p class="subtitle">مدیریت کامل فیلترشکن VLESS+Reality</p>
+</header>
+${message?`<div class="alert ${msgType==='success'?'alert-success':'alert-error'}">${message}</div>`:''}
+<div class="card">
+<h2>➕ ایجاد کاربر جدید</h2>
+<form method="post" action="${CONFIG.PANEL_PATH}/new?token=${CONFIG.ADMIN_PASSWORD}">
+<div class="grid">
+<div><label>نام کاربر</label><input type="text" name="name" placeholder="مثال: تلفن همراه" required></div>
+<div><label>تاریخ انقضا (روز)</label><input type="number" name="days" value="${CONFIG.DEFAULT_EXPIRE_DAYS}" min="1"></div>
+</div>
+<button type="submit" class="btn-primary">✅ ساخت کانفیگ جدید</button>
+</form>
+</div>
+<div class="card">
+<h2>📋 لینک سابسکریپشن</h2>
+<div class="code">${subLink}</div>
+<button class="btn-secondary" onclick="navigator.clipboard.writeText('${subLink}').then(()=>alert('کپی شد!'))">📋 کپی لینک ساب</button>
+</div>
+<div class="card">
+<h2>👥 کاربران (${users.length} نفر)</h2>
+${users.length===0?'<p style="color:#94a3b8">هنوز کاربری ایجاد نشده</p>':`<table><thead><tr><th>نام</th><th>ایجاد</th><th>انقضا</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${users.map(u=>{const exp=u.expiresAt&&Date.now()>u.expiresAt;return`<tr><td><strong>${u.name}</strong></td><td>${formatDate(u.createdAt)}</td><td>${formatDate(u.expiresAt)}</td><td><span class="badge ${exp?'badge-expired':'badge-active'}">${exp?'منقضی':'فعال ✅'}</span></td><td><button class="btn-secondary" onclick="navigator.clipboard.writeText('${u.link}').then(()=>alert('کپی شد!'))">کپی</button><form method="post" action="${CONFIG.PANEL_PATH}/delete?id=${u.id}&token=${CONFIG.ADMIN_PASSWORD}" style="display:inline" onsubmit="return confirm('مطمئنی؟')"><button type="submit" class="btn-danger">حذف</button></form></td></tr>`}).join('')}</tbody></table>`}
+</div>
+<div class="card">
+<h2>ℹ️ اطلاعات سرور</h2>
+<ul style="color:#94a3b8;line-height:2;margin-top:10px">
+<li>🔹 پروتکل: VLESS + Reality + Vision</li>
+<li>🔹 پورت: ${CONFIG.PORT}</li>
+<li>🔹 SNI: ${CONFIG.SNI_LIST[0]}</li>
+<li>🔹 Fingerprint: ${CONFIG.FINGERPRINT}</li>
+<li>🔹 دامنه: ${host}</li>
+</ul>
+</div>
 </div>
 </body>
 </html>`;
 }
-
-// ==========================================================
-// مسیرهای اصلی
-// ==========================================================
 
 export default {
   async fetch(request, env, ctx) {
@@ -285,73 +199,38 @@ export default {
     const token = url.searchParams.get('token') || '';
     const isAuth = token === CONFIG.ADMIN_PASSWORD;
 
-    // اتصال WebSocket برای VLESS
     if (path.startsWith(CONFIG.PANEL_PATH)) {
       const upgrade = request.headers.get('upgrade') || '';
       if (upgrade.toLowerCase() === 'websocket') {
-        return new Response(null, {
-          status: 101,
-          headers: { Upgrade: 'websocket', Connection: 'Upgrade' }
-        });
+        return new Response(null, { status: 101, headers: { Upgrade: 'websocket', Connection: 'Upgrade' } });
       }
     }
 
-    // صفحه ورود / پنل
     if (path === CONFIG.PANEL_PATH || path === CONFIG.PANEL_PATH + '/') {
-      if (!isAuth) {
-        return new Response(renderLogin(), {
-          headers: { 'Content-Type': 'text/html;charset=utf-8' }
-        });
-      }
-      const users = await getUsers(env);
-      return new Response(renderPanel(host, users), {
-        headers: { 'Content-Type': 'text/html;charset=utf-8' }
-      });
+      if (!isAuth) return new Response(renderLogin(), { headers: { 'Content-Type': 'text/html;charset=utf-8' } });
+      return new Response(renderPanel(host, await getUsers(env)), { headers: { 'Content-Type': 'text/html;charset=utf-8' } });
     }
 
-    // ساخت کاربر جدید
     if (path === CONFIG.PANEL_PATH + '/new' && request.method === 'POST' && isAuth) {
-      const formData = await request.formData();
-      const name = formData.get('name') || 'کاربر';
-      const days = parseInt(formData.get('days')) || CONFIG.DEFAULT_EXPIRE_DAYS;
-      
-      const user = await createUser(env, host, name, days);
+      const form = await request.formData();
+      const name = form.get('name') || 'کاربر';
+      const days = parseInt(form.get('days')) || CONFIG.DEFAULT_EXPIRE_DAYS;
+      const res = await createUser(env, host, name, days);
       const users = await getUsers(env);
-      
-      if (user.error) {
-        return new Response(renderPanel(host, users, user.error, 'error'), {
-          headers: { 'Content-Type': 'text/html;charset=utf-8' }
-        });
-      }
-      return new Response(renderPanel(host, users, `✅ کاربر «${name}» با موفقیت ایجاد شد! لینک خود را از جدول کپی کنید`, 'success'), {
-        headers: { 'Content-Type': 'text/html;charset=utf-8' }
-      });
+      return new Response(renderPanel(host, users, res.error || `✅ کاربر «${name}» ایجاد شد!`, res.error?'error':'success'), { headers: { 'Content-Type': 'text/html;charset=utf-8' } });
     }
 
-    // حذف کاربر
     if (path === CONFIG.PANEL_PATH + '/delete' && request.method === 'POST' && isAuth) {
-      const userId = url.searchParams.get('id');
-      await deleteUser(env, userId);
-      const users = await getUsers(env);
-      return new Response(renderPanel(host, users, '✅ کاربر با موفقیت حذف شد', 'success'), {
-        headers: { 'Content-Type': 'text/html;charset=utf-8' }
-      });
+      await deleteUser(env, url.searchParams.get('id'));
+      return new Response(renderPanel(host, await getUsers(env), '✅ حذف شد', 'success'), { headers: { 'Content-Type': 'text/html;charset=utf-8' } });
     }
 
-    // سابسکریپشن
     if (path === CONFIG.PANEL_PATH + '/sub') {
       const users = await getUsers(env);
-      const activeUsers = users.filter(u => u.active && (!u.expiresAt || Date.now() < u.expiresAt));
-      const content = activeUsers.map(u => u.link).join('\n');
-      return new Response(content, {
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8',
-          'Subscription-Userinfo': `upload=0; download=1099511627776; total=1099511627776; expire=${Math.floor(Date.now() / 1000) + 31536000}`
-        }
-      });
+      const active = users.filter(u => u.active && (!u.expiresAt || Date.now() < u.expiresAt));
+      return new Response(active.map(u => u.link).join('\n'), { headers: { 'Content-Type': 'text/plain;charset=utf-8' } });
     }
 
-    // صفحه اصلی
-    return new Response('VORTEX PRO — Active ✅', { status: 200 });
+    return new Response('VORTEX PRO — Active', { status: 200 });
   }
 };
